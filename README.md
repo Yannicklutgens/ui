@@ -11,7 +11,7 @@ Select, Tooltip, Alert, Spinner, Toast).
 
    ```json
    "dependencies": {
-     "@jannes64/ui": "git+ssh://git@github.com/Jannes64/ui.git#main"
+     "@jannes64/ui": "git+ssh://git@github.com/Yannicklutgens/ui.git#main"
    }
    ```
 
