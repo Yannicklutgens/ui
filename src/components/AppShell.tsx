@@ -1,11 +1,46 @@
-import { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
 export function AppShell({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return <div className={["app-shell", className].filter(Boolean).join(" ")} {...rest} />;
 }
 
-export function Sidebar({ className, ...rest }: HTMLAttributes<HTMLElement>) {
-  return <aside className={["sidebar", className].filter(Boolean).join(" ")} {...rest} />;
+export interface SidebarProps extends HTMLAttributes<HTMLElement> {
+  open?: boolean;
+}
+
+export function Sidebar({ open, className, ...rest }: SidebarProps) {
+  const classes = ["sidebar", open ? "open" : "", className].filter(Boolean).join(" ");
+  return <aside className={classes} {...rest} />;
+}
+
+export interface SidebarBackdropProps extends HTMLAttributes<HTMLDivElement> {
+  open?: boolean;
+}
+
+export function SidebarBackdrop({ open, className, ...rest }: SidebarBackdropProps) {
+  const classes = ["sidebar-backdrop", open ? "open" : "", className].filter(Boolean).join(" ");
+  return <div className={classes} aria-hidden="true" {...rest} />;
+}
+
+export function MobileTopbar({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
+  return <div className={["mobile-topbar", className].filter(Boolean).join(" ")} {...rest} />;
+}
+
+export function MenuButton({ className, ...rest }: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      type="button"
+      className={["menu-button", className].filter(Boolean).join(" ")}
+      aria-label="Toggle menu"
+      {...rest}
+    >
+      <span className="menu-button-bars">
+        <span />
+        <span />
+        <span />
+      </span>
+    </button>
+  );
 }
 
 export interface BrandProps extends HTMLAttributes<HTMLDivElement> {

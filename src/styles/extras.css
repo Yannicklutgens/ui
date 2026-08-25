@@ -101,3 +101,16 @@
 .toast-danger {
   border-color: var(--danger-border);
 }
+
+@media (max-width: 480px) {
+  .toast-stack {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .toast {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+}
