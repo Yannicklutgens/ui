@@ -1,0 +1,25 @@
+/* ---------------------------------------------------------------------
+   Forms / fields
+--------------------------------------------------------------------- */
+.form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.field-hint {
+  color: var(--text-faint);
+  font-size: 12px;
+  margin: 2px 0 0;
+}

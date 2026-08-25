@@ -1,0 +1,95 @@
+/* ---------------------------------------------------------------------
+   Cards / panels
+--------------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+/* ---------------------------------------------------------------------
+   Stat tiles
+--------------------------------------------------------------------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.stat-tile:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-2px);
+}
+.stat-value {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   Badges
+--------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.badge-online,
+.badge-success {
+  color: var(--success);
+  background: var(--success-soft);
+  border-color: var(--success-border);
+}
+.badge-pending {
+  color: var(--warning);
+  background: var(--warning-soft);
+  border-color: rgba(224, 178, 62, 0.32);
+}
+.badge-running {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+.badge-offline,
+.badge-error,
+.badge-failure {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border-color: var(--danger-border);
+}

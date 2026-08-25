@@ -1,0 +1,43 @@
+/* ---------------------------------------------------------------------
+   Design tokens — dark, near-black surfaces, soft translucent borders,
+   single red accent used for brand/focus/hover moments.
+--------------------------------------------------------------------- */
+:root {
+  --bg: #0c0c0d;
+  --bg-elevated: #111113;
+  --surface: #18181b;
+  --surface-hover: #1f1f23;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --text: #f1efe9;
+  --text-muted: rgba(241, 239, 233, 0.62);
+  --text-faint: rgba(241, 239, 233, 0.38);
+
+  --accent: #e3342f;
+  --accent-dark: #b91f1c;
+  --accent-soft: rgba(227, 52, 47, 0.14);
+  --accent-border: rgba(227, 52, 47, 0.35);
+
+  --success: #4fb35c;
+  --success-soft: rgba(79, 179, 92, 0.14);
+  --success-border: rgba(79, 179, 92, 0.32);
+
+  --danger: #ff6b6b;
+  --danger-soft: rgba(255, 107, 107, 0.14);
+  --danger-border: rgba(255, 107, 107, 0.35);
+
+  --warning: #e0b23e;
+  --warning-soft: rgba(224, 178, 62, 0.14);
+  --warning-border: rgba(224, 178, 62, 0.32);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --font-sans: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
