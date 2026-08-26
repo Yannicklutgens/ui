@@ -47,7 +47,23 @@ export interface BrandProps extends HTMLAttributes<HTMLDivElement> {
   mark?: ReactNode;
 }
 
-export function Brand({ mark = "◆", className, children, ...rest }: BrandProps) {
+const defaultMark = (
+  <svg viewBox="0 0 32 32" fill="none" width="1em" height="1em" aria-hidden="true">
+    <path
+      d="M16 2 L28 8 V17 C28 23.5 22.9 27.8 16 30 C9.1 27.8 4 23.5 4 17 V8 Z"
+      fill="currentColor"
+    />
+    <path
+      d="M16 9 V19 M16 19 L11 14.5 M16 19 L21 14.5"
+      stroke="var(--bg)"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export function Brand({ mark = defaultMark, className, children, ...rest }: BrandProps) {
   return (
     <div className={["brand", className].filter(Boolean).join(" ")} {...rest}>
       <span className="brand-mark">{mark}</span>
