@@ -48,8 +48,10 @@ export interface BrandProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const defaultMark = (
-  <svg viewBox="0 0 32 32" fill="none" width="1em" height="1em" aria-hidden="true">
-    <rect x="7" y="7" width="18" height="18" rx="3" fill="currentColor" transform="rotate(45 16 16)" />
+  <svg viewBox="0 0 600 600" fill="none" width="1em" height="1em" aria-hidden="true">
+    <rect width="600" height="600" rx="175" fill="currentColor" fillOpacity="0.15" />
+    <rect x="12.5" y="12.5" width="575" height="575" rx="162.5" stroke="currentColor" strokeOpacity="0.3" strokeWidth="25" />
+    <rect x="300" y="162" width="195.161" height="195.161" rx="10" transform="rotate(45 300 162)" fill="currentColor" />
   </svg>
 );
 
