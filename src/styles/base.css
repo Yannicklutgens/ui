@@ -169,6 +169,23 @@ button:active:not(:disabled) {
   border-color: var(--danger-border);
 }
 
+.btn-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  color: var(--accent);
+}
+.btn-link:hover:not(:disabled) {
+  background: none;
+  border-color: transparent;
+  color: var(--accent-dark);
+}
+.btn-link:active:not(:disabled) {
+  transform: none;
+}
+
 a.btn-primary {
   display: inline-block;
   font-family: inherit;

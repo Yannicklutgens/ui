@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
-export type ButtonVariant = "default" | "primary" | "danger";
+export type ButtonVariant = "default" | "primary" | "danger" | "link";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -10,6 +10,7 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   default: "",
   primary: "btn-primary",
   danger: "btn-danger",
+  link: "btn-link",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
