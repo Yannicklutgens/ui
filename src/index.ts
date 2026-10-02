@@ -16,3 +16,4 @@ export * from "./components/Tooltip";
 export * from "./components/Alert";
 export * from "./components/Spinner";
 export * from "./components/Toast";
+export * from "./components/CopyField";

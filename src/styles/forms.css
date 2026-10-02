@@ -23,3 +23,17 @@
   font-size: 12px;
   margin: 2px 0 0;
 }
+.copy-field-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.copy-field-row input,
+.copy-field-row textarea {
+  flex: 1;
+  min-width: 0;
+}
+.copy-field-row textarea {
+  resize: none;
+  word-break: break-all;
+}
