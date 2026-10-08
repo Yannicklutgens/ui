@@ -7,14 +7,15 @@
   padding: 0;
 }
 .list-compact {
-  --list-item-padding-y: 6px;
+  --list-item-padding-y: 4px;
+  --list-item-gap: 8px;
 }
 .list-item {
   display: grid;
   grid-template-columns: auto minmax(0, 200px) minmax(0, 1fr) auto auto;
   grid-template-areas: "leading title description meta trailing";
   align-items: center;
-  gap: 12px;
+  gap: var(--list-item-gap, 12px);
   width: 100%;
   padding: var(--list-item-padding-y, 10px) var(--list-item-padding-x, 14px);
   border: none;
@@ -23,8 +24,16 @@
   color: var(--text);
   font: inherit;
   font-size: 13px;
+  line-height: 1.4;
   text-align: left;
   text-decoration: none;
+}
+/* Block elements passed into slots shouldn't add height. :where keeps
+   specificity low so utility classes like .muted still apply. */
+.list-item :where(p, h1, h2, h3, h4) {
+  margin: 0;
+  line-height: inherit;
+  color: inherit;
 }
 .list > li:last-child > .list-item {
   border-bottom: none;
@@ -83,5 +92,8 @@ button.list-item:hover {
       "leading title meta"
       "leading description trailing";
     row-gap: 2px;
+  }
+  .list-compact .list-item {
+    row-gap: 0;
   }
 }
