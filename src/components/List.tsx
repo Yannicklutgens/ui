@@ -1,8 +1,15 @@
 import { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
-export function List({ className, ...rest }: HTMLAttributes<HTMLUListElement>) {
-  return <ul className={["list", className].filter(Boolean).join(" ")} {...rest} />;
+export type ListDensity = "default" | "compact";
+
+export interface ListProps extends HTMLAttributes<HTMLUListElement> {
+  density?: ListDensity;
+}
+
+export function List({ density = "default", className, ...rest }: ListProps) {
+  const classes = ["list", density === "compact" ? "list-compact" : "", className].filter(Boolean).join(" ");
+  return <ul className={classes} {...rest} />;
 }
 
 export interface ListItemProps {

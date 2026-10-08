@@ -6,6 +6,9 @@
   margin: 0;
   padding: 0;
 }
+.list-compact {
+  --list-item-padding-y: 6px;
+}
 .list-item {
   display: grid;
   grid-template-columns: auto minmax(0, 200px) minmax(0, 1fr) auto auto;
@@ -13,7 +16,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 10px 14px;
+  padding: var(--list-item-padding-y, 10px) var(--list-item-padding-x, 14px);
   border: none;
   border-bottom: 1px solid var(--border);
   background: none;
