@@ -3,6 +3,7 @@ export * from "./components/Card";
 export * from "./components/Badge";
 export * from "./components/StatTile";
 export * from "./components/Table";
+export * from "./components/List";
 export * from "./components/Field";
 export * from "./components/Switch";
 export * from "./components/Tabs";
