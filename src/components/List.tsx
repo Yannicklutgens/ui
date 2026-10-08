@@ -1,15 +1,18 @@
-import { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
-export type ListDensity = "default" | "compact";
+/** A preset, or the vertical row padding in px (default is 10, compact is 6). */
+export type ListDensity = "default" | "compact" | number;
 
 export interface ListProps extends HTMLAttributes<HTMLUListElement> {
   density?: ListDensity;
 }
 
-export function List({ density = "default", className, ...rest }: ListProps) {
+export function List({ density = "default", className, style, ...rest }: ListProps) {
   const classes = ["list", density === "compact" ? "list-compact" : "", className].filter(Boolean).join(" ");
-  return <ul className={classes} {...rest} />;
+  const densityStyle =
+    typeof density === "number" ? ({ "--list-item-padding-y": `${density}px` } as CSSProperties) : undefined;
+  return <ul className={classes} style={{ ...densityStyle, ...style }} {...rest} />;
 }
 
 export interface ListItemProps {

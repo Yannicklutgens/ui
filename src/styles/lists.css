@@ -7,7 +7,7 @@
   padding: 0;
 }
 .list-compact {
-  --list-item-padding-y: 4px;
+  --list-item-padding-y: 6px;
   --list-item-gap: 8px;
 }
 .list-item {
