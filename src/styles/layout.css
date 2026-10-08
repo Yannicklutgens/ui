@@ -68,6 +68,30 @@
   color: var(--accent);
   background: var(--accent-soft);
 }
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.sidebar-group-header select {
+  width: 100%;
+}
+.sidebar-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 12px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+}
+.sidebar-group-items .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+}
 .sidebar-user {
   display: flex;
   align-items: center;

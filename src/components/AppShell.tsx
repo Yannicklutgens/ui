@@ -64,6 +64,19 @@ export function SidebarNav({ className, ...rest }: HTMLAttributes<HTMLElement>) 
   return <nav className={["sidebar-nav", className].filter(Boolean).join(" ")} {...rest} />;
 }
 
+export interface SidebarGroupProps extends HTMLAttributes<HTMLDivElement> {
+  header?: ReactNode;
+}
+
+export function SidebarGroup({ header, className, children, ...rest }: SidebarGroupProps) {
+  return (
+    <div className={["sidebar-group", className].filter(Boolean).join(" ")} {...rest}>
+      {header && <div className="sidebar-group-header">{header}</div>}
+      <div className="sidebar-group-items">{children}</div>
+    </div>
+  );
+}
+
 export interface NavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   active?: boolean;
 }
