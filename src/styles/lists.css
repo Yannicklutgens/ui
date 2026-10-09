@@ -46,6 +46,8 @@ a.list-item:hover,
 button.list-item:hover {
   background: var(--surface-hover);
 }
+.list-item.selected,
+.list-item.selected:hover,
 .list-item.active,
 .list-item.active:hover {
   background: var(--accent-soft);
@@ -57,6 +59,66 @@ button.list-item:hover {
   grid-area: leading;
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 6px var(--list-item-padding-x, 14px);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+  font-size: 13px;
+}
+.list-header-count {
+  color: var(--text-muted);
+}
+.list-header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.list-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.list-checkbox:hover {
+  border-color: var(--accent-border);
+}
+.list-checkbox.checked,
+.list-checkbox.mixed {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.list-checkbox.checked::after {
+  content: "";
+  width: 4px;
+  height: 7px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+.list-checkbox.mixed::after {
+  content: "";
+  width: 8px;
+  height: 2px;
+  background: #ffffff;
+}
+.list-checkbox:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .list-item-title {
   grid-area: title;
