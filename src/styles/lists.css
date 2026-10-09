@@ -75,6 +75,9 @@ button.list-item:hover {
 }
 .list-item-meta {
   grid-area: meta;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text-faint);
   font-size: 12px;
   white-space: nowrap;
@@ -83,6 +86,17 @@ button.list-item:hover {
   grid-area: trailing;
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+/* Icon buttons inside rows: smaller, and the negative margin keeps them
+   from adding to the row height. */
+.list-item .btn-icon {
+  padding: 3px;
+  margin: -3px 0;
+}
+.list-item .btn-icon .icon {
+  width: 14px;
+  height: 14px;
 }
 
 @media (max-width: 480px) {
