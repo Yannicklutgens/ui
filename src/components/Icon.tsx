@@ -61,6 +61,11 @@ const TOKEN_COLORS: Record<string, string> = {
   faint: "var(--text-faint)",
 };
 
+/** Resolves a token name (accent, danger, …) to its CSS variable; other values pass through. */
+export function resolveColor(color?: string) {
+  return color ? (TOKEN_COLORS[color] ?? color) : undefined;
+}
+
 function toCamel(name: string) {
   return name.replace(/-([a-z0-9])/g, (_, c: string) => c.toUpperCase());
 }
@@ -71,7 +76,7 @@ export function Icon({ name, type = "solid", color, size, className, style, ...r
   const a11y = rest["aria-label"] ? { role: "img" } : { "aria-hidden": true };
 
   const baseStyle: CSSProperties = {
-    color: color ? (TOKEN_COLORS[color] ?? color) : undefined,
+    color: resolveColor(color),
     width: dimension,
     height: dimension,
     ...style,

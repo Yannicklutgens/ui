@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
-import { Icon, IconType } from "./Icon";
+import { Icon, IconType, resolveColor } from "./Icon";
 
 export type ButtonVariant = "default" | "primary" | "danger" | "link";
 
@@ -11,6 +11,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: "start" | "end";
   /** No border or background until hover. */
   borderless?: boolean;
+  /** Text and icon colour: any CSS colour or a token (accent, danger, success, warning, muted, faint). */
+  color?: string;
 }
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
@@ -21,7 +23,19 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = "default", icon, iconType, iconPosition = "start", borderless, className, children, title, ...rest },
+  {
+    variant = "default",
+    icon,
+    iconType,
+    iconPosition = "start",
+    borderless,
+    color,
+    className,
+    style,
+    children,
+    title,
+    ...rest
+  },
   ref,
 ) {
   const hasChildren = children !== undefined && children !== null && children !== false && children !== "";
@@ -46,6 +60,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <button
       ref={ref}
       className={classes || undefined}
+      style={color ? { color: resolveColor(color), ...style } : style}
       title={title ?? (iconOnly ? rest["aria-label"] : undefined)}
       {...rest}
     >
