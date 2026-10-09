@@ -1,19 +1,37 @@
 import { CSSProperties, HTMLAttributes } from "react";
+import * as ionicons from "ionicons/icons";
 
 const registry = new Map<string, string>();
+const decoded = new Map<string, string>();
+const builtIn = ionicons as Record<string, string>;
 
 const DATA_URL_PREFIX = /^data:image\/svg\+xml(;utf8)?,/;
 
+function toMarkup(value: string) {
+  const svg = value.replace(DATA_URL_PREFIX, "");
+  return svg.startsWith("%3C") ? decodeURIComponent(svg) : svg;
+}
+
 /**
- * Registers SVG icons by name, e.g. `registerIcons({ home, homeOutline })` with icons from
- * `ionicons/icons`. Accepts raw SVG markup or `data:image/svg+xml` URLs.
+ * Registers extra SVG icons by name, or overrides built-in Ionicons.
+ * Accepts raw SVG markup or `data:image/svg+xml` URLs.
  */
 export function registerIcons(icons: Record<string, string>) {
   for (const [key, value] of Object.entries(icons)) {
-    let svg = value.replace(DATA_URL_PREFIX, "");
-    if (svg.startsWith("%3C")) svg = decodeURIComponent(svg);
-    registry.set(key, svg);
+    registry.set(key, toMarkup(value));
   }
+}
+
+function lookup(key: string) {
+  const registered = registry.get(key);
+  if (registered) return registered;
+
+  let svg = decoded.get(key);
+  if (svg === undefined && typeof builtIn[key] === "string") {
+    svg = toMarkup(builtIn[key]);
+    decoded.set(key, svg);
+  }
+  return svg;
 }
 
 export type IconType = "solid" | "outline" | "sharp";
@@ -48,7 +66,7 @@ function toCamel(name: string) {
 }
 
 export function Icon({ name, type = "solid", color, size, className, style, ...rest }: IconProps) {
-  const svg = registry.get(toCamel(name) + TYPE_SUFFIX[type]);
+  const svg = lookup(toCamel(name) + TYPE_SUFFIX[type]);
   const dimension = typeof size === "number" ? `${size}px` : size;
   const a11y = rest["aria-label"] ? { role: "img" } : { "aria-hidden": true };
 
