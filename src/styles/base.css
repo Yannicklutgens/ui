@@ -186,6 +186,41 @@ button:active:not(:disabled) {
   transform: none;
 }
 
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  line-height: 0;
+}
+.btn-icon .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-borderless {
+  background: transparent;
+  border-color: transparent;
+}
+.btn-borderless:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: transparent;
+}
+.btn-primary.btn-borderless {
+  color: var(--accent);
+}
+.btn-primary.btn-borderless:hover:not(:disabled) {
+  background: var(--accent-soft);
+}
+.btn-danger.btn-borderless:hover:not(:disabled) {
+  background: var(--danger-soft);
+}
+
 a.btn-primary {
   display: inline-block;
   font-family: inherit;
