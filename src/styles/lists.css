@@ -46,6 +46,9 @@ a.list-item:hover,
 button.list-item:hover {
   background: var(--surface-hover);
 }
+.list-item.emphasized {
+  background: var(--surface);
+}
 .list-item.selected,
 .list-item.selected:hover,
 .list-item.active,
