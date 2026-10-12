@@ -220,6 +220,14 @@ button:active:not(:disabled) {
 .btn-danger.btn-borderless:hover:not(:disabled) {
   background: var(--danger-soft);
 }
+/* Icon-only borderless buttons: round, with a translucent hover so the
+   circle shows on any background (including hovered/selected rows). */
+.btn-icon.btn-borderless {
+  border-radius: 50%;
+}
+.btn-icon.btn-borderless:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
 
 a.btn-primary {
   display: inline-block;
