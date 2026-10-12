@@ -196,7 +196,19 @@ export function ListItem({
       <span className="list-item-title">{title}</span>
       {description && <span className="list-item-description">{description}</span>}
       {meta && <span className="list-item-meta">{meta}</span>}
-      {trailing && <span className="list-item-trailing">{trailing}</span>}
+      {trailing && (
+        // Controls in the trailing slot act on their own: keep their clicks from
+        // reaching the row (NavLink navigation / row onClick).
+        <span
+          className="list-item-trailing"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
+          {trailing}
+        </span>
+      )}
     </>
   );
 
