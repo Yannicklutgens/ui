@@ -4,7 +4,7 @@
 .avatar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--avatar-gap, 12px);
   min-width: 0;
 }
 .avatar-image {
@@ -37,4 +37,9 @@
 .avatar-subline {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* Lines content up with the text of an Avatar above or below it. */
+.avatar-indent {
+  padding-left: calc(var(--avatar-size, 40px) + var(--avatar-gap, 12px));
 }

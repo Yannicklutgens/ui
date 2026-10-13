@@ -19,7 +19,10 @@ content designed for a light background like emails. `theme-dark` switches back 
 
 `Avatar` shows a round image with a `mainline` (e.g. username) and optional `subline`. Without a
 `src`, or when the image fails to load, it shows the first letter of the mainline on a color
-derived from it.
+derived from it. Give content next to an Avatar the `avatar-indent` class to line it up
+with the Avatar's text (e.g. a subject above and a message below). It uses `--avatar-size`
+(default 40px) and `--avatar-gap` (default 12px); for another `size`, set `--avatar-size` on a
+shared parent too.
 
 ## Using it in a new project (separate repo)
 
