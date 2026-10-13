@@ -114,7 +114,7 @@ export function List({
   return (
     <ListContext.Provider value={ctx}>
       {(header || selectable) && (
-        <div className="list-header" style={densityStyle}>
+        <div className="panel-header list-header" style={densityStyle}>
           {selectable && (
             <Checkbox
               state={allState}
@@ -123,7 +123,7 @@ export function List({
             />
           )}
           {selectable && selectedCount > 0 && <span className="list-header-count">{selectedCount} selected</span>}
-          {header && <div className="list-header-content">{header}</div>}
+          {header && <div className="panel-header-actions">{header}</div>}
         </div>
       )}
       <ul className={classes} style={{ ...densityStyle, ...style }} {...rest}>

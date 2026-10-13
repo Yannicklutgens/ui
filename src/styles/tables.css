@@ -1,17 +1,12 @@
 /* ---------------------------------------------------------------------
    Tables
 --------------------------------------------------------------------- */
-.table-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
-.table-wrap table {
+.panel table {
   border: none;
 }
 th {

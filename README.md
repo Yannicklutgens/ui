@@ -2,8 +2,12 @@
 
 A small React component library carrying the dark, red-accent "ops dashboard" look used by
 this project — design tokens, base styles, and a set of ready-made components (Button, Card,
-Badge, StatTile, Table, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
+Badge, StatTile, Panel, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
 Select, Tooltip, Alert, Spinner, Toast).
+
+`Panel` is a bordered box for tables and Lists. Give it `title` and/or `actions` for a toolbar
+header; without them it is just the box, and a `List` inside it shows its own header in the same
+style. `TableWrap` is a deprecated alias of `Panel`.
 
 ## Using it in a new project (separate repo)
 

@@ -66,23 +66,10 @@ button.list-item:hover {
 }
 
 .list-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 40px;
   padding: 6px var(--list-item-padding-x, 14px);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-elevated);
-  font-size: 13px;
 }
 .list-header-count {
   color: var(--text-muted);
-}
-.list-header-content {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
 }
 
 .list-checkbox {
