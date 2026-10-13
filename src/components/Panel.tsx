@@ -11,8 +11,8 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   footerEnd?: ReactNode;
   /** Drop the body padding for edge-to-edge content. Tables and Lists are flush automatically. */
   flush?: boolean;
-  /** Render the panel in a theme scope, e.g. "light" for content designed for a white background. */
-  theme?: "light" | "dark";
+  /** Render the body in a theme scope, e.g. "light" for content designed for a white background. */
+  bodyTheme?: "light" | "dark";
   /**
    * "page" (default): the panel grows with its content and the page scrolls.
    * "panel": the panel fits the viewport (or `maxHeight`) and its body scrolls.
@@ -29,7 +29,7 @@ export function Panel({
   footerStart,
   footerEnd,
   flush,
-  theme,
+  bodyTheme,
   scroll = "page",
   maxHeight,
   className,
@@ -63,7 +63,7 @@ export function Panel({
         } as CSSProperties)
       : undefined;
 
-  const classes = ["panel", theme ? `theme-${theme}` : "", scroll === "panel" ? "panel-scroll" : "", className]
+  const classes = ["panel", scroll === "panel" ? "panel-scroll" : "", className]
     .filter(Boolean)
     .join(" ");
 
@@ -75,7 +75,11 @@ export function Panel({
           {headerEnd && <div className="panel-header-end">{headerEnd}</div>}
         </div>
       )}
-      <div className={["panel-body", flush ? "panel-body-flush" : ""].filter(Boolean).join(" ")}>{children}</div>
+      <div
+        className={["panel-body", flush ? "panel-body-flush" : "", bodyTheme ? `theme-${bodyTheme}` : ""]
+          .filter(Boolean)
+          .join(" ")}
+      >{children}</div>
       {(footerStart || footerEnd) && (
         <div className="panel-footer">
           {footerStart && <div className="panel-footer-start">{footerStart}</div>}

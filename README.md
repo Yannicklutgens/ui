@@ -14,7 +14,7 @@ without them it is just the box, and a `List` inside it shows its own header in 
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
 
 Everything is styled with the tokens in `tokens.css` (dark by default). Add the `theme-light` class
-to any element, or `theme="light"` on a Panel, to render its contents on white, for example
+to any element, or `bodyTheme="light"` on a Panel (only its content, the header and footer stay as they are), to render its contents on white, for example
 content designed for a light background like emails. `theme-dark` switches back inside it.
 
 `Avatar` shows a round image with a `mainline` (e.g. username) and optional `subline`. Without a

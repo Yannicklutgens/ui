@@ -40,7 +40,7 @@
   padding: 0;
 }
 
-/* The footer continues a padded body; under flush content it becomes a bar like the header. */
+/* The footer continues a padded body; under flush or themed content it becomes a bar like the header. */
 .panel-footer {
   display: flex;
   align-items: center;
@@ -48,7 +48,9 @@
   padding: 0 var(--panel-padding) var(--panel-padding);
 }
 .panel-body-flush + .panel-footer,
-.panel-body:has(> table, > .list, > .list-header) + .panel-footer {
+.panel-body:has(> table, > .list, > .list-header) + .panel-footer,
+.panel-body.theme-light + .panel-footer,
+.panel-body.theme-dark + .panel-footer {
   min-height: 40px;
   padding: 6px 14px;
   border-top: 1px solid var(--border);
