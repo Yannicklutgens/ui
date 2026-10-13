@@ -123,7 +123,7 @@ export function List({
             />
           )}
           {selectable && selectedCount > 0 && <span className="list-header-count">{selectedCount} selected</span>}
-          {header && <div className="panel-header-actions">{header}</div>}
+          {header && <div className="panel-header-end">{header}</div>}
         </div>
       )}
       <ul className={classes} style={{ ...densityStyle, ...style }} {...rest}>

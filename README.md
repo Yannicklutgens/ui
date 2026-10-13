@@ -5,9 +5,11 @@ this project — design tokens, base styles, and a set of ready-made components 
 Badge, StatTile, Panel, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
 Select, Tooltip, Alert, Spinner, Toast).
 
-`Panel` is a bordered box for tables and Lists. Give it `title` and/or `actions` for a toolbar
-header; without them it is just the box, and a `List` inside it shows its own header in the same
-style. `TableWrap` is a deprecated alias of `Panel`.
+`Panel` is a bordered box with 16px body padding (`--panel-padding`); tables and Lists inside it
+stay flush automatically, and `flush` drops the padding for other edge-to-edge content. Pass
+`headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
+without them it is just the box, and a `List` inside it shows its own header in the same style.
+`TableWrap` is a deprecated alias of `Panel`.
 
 ## Using it in a new project (separate repo)
 

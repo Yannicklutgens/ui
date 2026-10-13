@@ -1,23 +1,25 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface PanelProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  /** Left side of the header, e.g. a title or sender info. */
-  title?: ReactNode;
-  /** Toolbar on the right side of the header, e.g. buttons. */
-  actions?: ReactNode;
+export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
+  /** Toolbar content on the left side of the header, e.g. buttons. */
+  headerStart?: ReactNode;
+  /** Toolbar content on the right side of the header, e.g. buttons. */
+  headerEnd?: ReactNode;
+  /** Drop the body padding for edge-to-edge content. Tables and Lists are flush automatically. */
+  flush?: boolean;
 }
 
-/** Bordered box around content such as a table or List. The header only renders when `title` or `actions` is set. */
-export function Panel({ title, actions, className, children, ...rest }: PanelProps) {
+/** Bordered box around content. The header only renders when `headerStart` or `headerEnd` is set. */
+export function Panel({ headerStart, headerEnd, flush, className, children, ...rest }: PanelProps) {
   return (
     <div className={["panel", className].filter(Boolean).join(" ")} {...rest}>
-      {(title || actions) && (
+      {(headerStart || headerEnd) && (
         <div className="panel-header">
-          {title && <div className="panel-header-title">{title}</div>}
-          {actions && <div className="panel-header-actions">{actions}</div>}
+          {headerStart && <div className="panel-header-start">{headerStart}</div>}
+          {headerEnd && <div className="panel-header-end">{headerEnd}</div>}
         </div>
       )}
-      {children}
+      <div className={["panel-body", flush ? "panel-body-flush" : ""].filter(Boolean).join(" ")}>{children}</div>
     </div>
   );
 }

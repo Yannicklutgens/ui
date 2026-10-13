@@ -3,6 +3,7 @@
 --------------------------------------------------------------------- */
 .panel,
 .table-wrap {
+  --panel-padding: 16px;
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -17,12 +18,21 @@
   background: var(--bg-elevated);
   font-size: 13px;
 }
-.panel-header-title {
-  min-width: 0;
-}
-.panel-header-actions {
+.panel-header-start,
+.panel-header-end {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+}
+.panel-header-end {
   margin-left: auto;
+}
+.panel-body {
+  padding: var(--panel-padding);
+}
+/* tables and Lists bring their own cell/row padding */
+.panel-body-flush,
+.panel-body:has(> table, > .list, > .list-header) {
+  padding: 0;
 }
