@@ -4,6 +4,7 @@ export * from "./components/Card";
 export * from "./components/Badge";
 export * from "./components/StatTile";
 export * from "./components/Panel";
+export * from "./components/Avatar";
 export * from "./components/List";
 export * from "./components/Field";
 export * from "./components/Switch";

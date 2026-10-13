@@ -2,13 +2,15 @@
    Design tokens — dark, near-black surfaces, soft translucent borders,
    single red accent used for brand/focus/hover moments.
 --------------------------------------------------------------------- */
-:root {
+:root,
+.theme-dark {
   --bg: #0c0c0d;
   --bg-elevated: #111113;
   --surface: #18181b;
   --surface-hover: #1f1f23;
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);
+  --hover-overlay: rgba(255, 255, 255, 0.1);
 
   --text: #f1efe9;
   --text-muted: rgba(241, 239, 233, 0.62);
@@ -40,4 +42,44 @@
 
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.28);
   --shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Light scope: put `theme-light` on any element (or Panel theme="light") to render its
+   contents on white, e.g. content that is designed for a light background like emails. */
+.theme-light {
+  --bg: #ffffff;
+  --bg-elevated: #f6f6f7;
+  --surface: #f4f4f5;
+  --surface-hover: #e9e9ec;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  --hover-overlay: rgba(0, 0, 0, 0.06);
+
+  --text: #1b1b1f;
+  --text-muted: rgba(27, 27, 31, 0.65);
+  --text-faint: rgba(27, 27, 31, 0.42);
+
+  --accent-soft: rgba(227, 52, 47, 0.1);
+
+  --success: #2f8a3c;
+  --success-soft: rgba(47, 138, 60, 0.1);
+  --success-border: rgba(47, 138, 60, 0.32);
+
+  --danger: #d0312d;
+  --danger-soft: rgba(208, 49, 45, 0.08);
+  --danger-border: rgba(208, 49, 45, 0.32);
+
+  --warning: #a87a06;
+  --warning-soft: rgba(168, 122, 6, 0.1);
+  --warning-border: rgba(168, 122, 6, 0.32);
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* a theme scope paints itself, so nested scopes don't inherit the outer colors */
+.theme-dark,
+.theme-light {
+  color: var(--text);
+  background: var(--bg);
 }

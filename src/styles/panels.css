@@ -19,13 +19,16 @@
   font-size: 13px;
 }
 .panel-header-start,
-.panel-header-end {
+.panel-header-end,
+.panel-footer-start,
+.panel-footer-end {
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 0;
 }
-.panel-header-end {
+.panel-header-end,
+.panel-footer-end {
   margin-left: auto;
 }
 .panel-body {
@@ -35,4 +38,42 @@
 .panel-body-flush,
 .panel-body:has(> table, > .list, > .list-header) {
   padding: 0;
+}
+
+/* The footer continues a padded body; under flush content it becomes a bar like the header. */
+.panel-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 var(--panel-padding) var(--panel-padding);
+}
+.panel-body-flush + .panel-footer,
+.panel-body:has(> table, > .list, > .list-header) + .panel-footer {
+  min-height: 40px;
+  padding: 6px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-elevated);
+  font-size: 13px;
+}
+
+/* scroll="panel": fixed header/footer, scrolling body */
+.panel-scroll {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: var(--panel-max-height);
+}
+.panel-scroll > .panel-header,
+.panel-scroll > .panel-footer {
+  flex-shrink: 0;
+}
+.panel-scroll > .panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+.panel-scroll > .panel-body > .list-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }

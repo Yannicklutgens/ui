@@ -2,7 +2,7 @@
 
 A small React component library carrying the dark, red-accent "ops dashboard" look used by
 this project — design tokens, base styles, and a set of ready-made components (Button, Card,
-Badge, StatTile, Panel, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
+Badge, StatTile, Panel, Avatar, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
 Select, Tooltip, Alert, Spinner, Toast).
 
 `Panel` is a bordered box with 16px body padding (`--panel-padding`); tables and Lists inside it
@@ -10,6 +10,16 @@ stay flush automatically, and `flush` drops the padding for other edge-to-edge c
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
 without them it is just the box, and a `List` inside it shows its own header in the same style.
 `TableWrap` is a deprecated alias of `Panel`.
+`footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
+viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
+
+Everything is styled with the tokens in `tokens.css` (dark by default). Add the `theme-light` class
+to any element, or `theme="light"` on a Panel, to render its contents on white, for example
+content designed for a light background like emails. `theme-dark` switches back inside it.
+
+`Avatar` shows a round image with a `mainline` (e.g. username) and optional `subline`. Without a
+`src`, or when the image fails to load, it shows the first letter of the mainline on a color
+derived from it.
 
 ## Using it in a new project (separate repo)
 
