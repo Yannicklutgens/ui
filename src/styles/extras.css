@@ -6,10 +6,7 @@
   display: inline-flex;
 }
 .tooltip-bubble {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
   background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   color: var(--text);
@@ -20,7 +17,13 @@
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-pop);
   pointer-events: none;
-  z-index: 200;
+  z-index: 1000;
+  animation: tooltip-in 120ms ease-out;
+}
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+  }
 }
 
 /* ---------------------------------------------------------------------

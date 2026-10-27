@@ -1,4 +1,5 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
+import { useTooltip } from "./useTooltip";
 
 export interface TooltipProps {
   content: ReactNode;
@@ -6,18 +7,12 @@ export interface TooltipProps {
 }
 
 export function Tooltip({ content, children }: TooltipProps) {
-  const [visible, setVisible] = useState(false);
+  const { triggerProps, bubble } = useTooltip(content);
 
   return (
-    <span
-      className="tooltip-wrap"
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-      onFocus={() => setVisible(true)}
-      onBlur={() => setVisible(false)}
-    >
+    <span className="tooltip-wrap" {...triggerProps}>
       {children}
-      {visible && <span className="tooltip-bubble">{content}</span>}
+      {bubble}
     </span>
   );
 }

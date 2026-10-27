@@ -5,6 +5,10 @@ this project — design tokens, base styles, and a set of ready-made components 
 Badge, StatTile, Panel, Avatar, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
 Select, Tooltip, Alert, Spinner, Toast).
 
+`Button` takes `label` to show a tooltip on hover and focus (e.g. `<Button icon="trash" label="Delete" />`);
+for an icon-only button it is also the default `aria-label`. Tooltips are rendered in `document.body`, so
+scrolling or overflow-hidden parents don't clip them.
+
 `Panel` is a bordered box with 16px body padding (`--panel-padding`); tables and Lists inside it
 stay flush automatically, and `flush` drops the padding for other edge-to-edge content. Pass
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
