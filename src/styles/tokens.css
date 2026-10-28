@@ -42,6 +42,7 @@
 
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.28);
   --shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Light scope: put `theme-light` on any element (or Panel theme="light") to render its
@@ -75,6 +76,7 @@
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.06);
   --shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.18);
+  --shadow-menu: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* a theme scope paints itself, so nested scopes don't inherit the outer colors */

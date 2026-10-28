@@ -37,7 +37,7 @@
   background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-pop);
+  box-shadow: var(--shadow-menu);
   z-index: 1000;
   animation: tooltip-in 120ms ease-out;
 }
