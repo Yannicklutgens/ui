@@ -22,6 +22,11 @@ export function useTooltip(content: ReactNode) {
 
   const show = (e: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) =>
     setAnchor(e.currentTarget.getBoundingClientRect());
+  // Mouse presses focus buttons in Firefox; re-rendering mid-click swallows the click,
+  // so focus only shows the tooltip when it comes from the keyboard.
+  const showOnFocus = (e: FocusEvent<HTMLElement>) => {
+    if (e.currentTarget.matches(":focus-visible")) show(e);
+  };
   const hide = () => {
     setAnchor(null);
     setPosition(null);
@@ -70,7 +75,7 @@ export function useTooltip(content: ReactNode) {
       : null;
 
   return {
-    triggerProps: { onMouseEnter: show, onMouseLeave: hide, onFocus: show, onBlur: hide },
+    triggerProps: { onMouseEnter: show, onMouseLeave: hide, onFocus: showOnFocus, onBlur: hide },
     bubble,
   };
 }
