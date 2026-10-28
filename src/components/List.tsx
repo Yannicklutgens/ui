@@ -148,6 +148,8 @@ export interface ListItemProps {
   emphasized?: boolean;
   active?: boolean;
   onClick?: MouseEventHandler<HTMLElement>;
+  /** Right-click handler, e.g. `onContextMenu` from useContextMenu. */
+  onContextMenu?: MouseEventHandler<HTMLElement>;
   className?: string;
 }
 
@@ -163,6 +165,7 @@ export function ListItem({
   emphasized,
   active,
   onClick,
+  onContextMenu,
   className,
 }: ListItemProps) {
   const list = useContext(ListContext);
@@ -215,18 +218,22 @@ export function ListItem({
   let row: ReactNode;
   if (to !== undefined) {
     row = (
-      <NavLink to={to} end={end} onClick={onClick} className={({ isActive }) => classes(isActive || !!active)}>
+      <NavLink to={to} end={end} onClick={onClick} onContextMenu={onContextMenu} className={({ isActive }) => classes(isActive || !!active)}>
         {content}
       </NavLink>
     );
   } else if (onClick) {
     row = (
-      <button type="button" onClick={onClick} className={classes(!!active)}>
+      <button type="button" onClick={onClick} onContextMenu={onContextMenu} className={classes(!!active)}>
         {content}
       </button>
     );
   } else {
-    row = <div className={classes(!!active)}>{content}</div>;
+    row = (
+      <div onContextMenu={onContextMenu} className={classes(!!active)}>
+        {content}
+      </div>
+    );
   }
 
   return <li>{row}</li>;

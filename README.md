@@ -9,6 +9,21 @@ Select, Tooltip, Alert, Spinner, Toast).
 for an icon-only button it is also the default `aria-label`. Tooltips are rendered in `document.body`, so
 scrolling or overflow-hidden parents don't clip them.
 
+`useContextMenu(items)` gives an element a custom right-click menu. Spread `onContextMenu` on it (ListItem takes
+it as a prop) and render `menu` anywhere:
+
+```tsx
+const { onContextMenu, menu } = useContextMenu([
+  { label: "Mark as read", icon: "mail-open", onSelect: markRead },
+  { label: "Move to", icon: "folder", items: folders.map((f) => ({ label: f.name, onSelect: () => move(f.path) })) },
+  "divider",
+  { label: "Delete", icon: "trash", danger: true, onSelect: remove },
+]);
+```
+
+An item with `items` instead of `onSelect` is a submenu, opened on hover or with the arrow keys. Without items
+(`undefined` or `[]`) `onContextMenu` is undefined and the browser's own menu shows; Shift + right-click always does.
+
 `Panel` is a bordered box with 16px body padding (`--panel-padding`); tables and Lists inside it
 stay flush automatically, and `flush` drops the padding for other edge-to-edge content. Pass
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;

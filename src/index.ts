@@ -16,6 +16,7 @@ export * from "./components/AppShell";
 export * from "./components/PageHeader";
 export * from "./components/Select";
 export * from "./components/Tooltip";
+export * from "./components/useContextMenu";
 export * from "./components/Alert";
 export * from "./components/Spinner";
 export * from "./components/Toast";
