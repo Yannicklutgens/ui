@@ -43,12 +43,10 @@ with the Avatar's text (e.g. a subject above and a message below). It uses `--av
 (default 40px) and `--avatar-gap` (default 12px); for another `size`, set `--avatar-size` on a
 shared parent too.
 
-`Divider` is a 1px line: `<Divider />` runs across 90% of the parent's width, and
-`<Divider orientation="vertical" />` inside a flex row (a toolbar or header) covers 90% of the row's height.
-It is painted in the surrounding text color at `--divider-opacity` (default 0.75), so it keeps the same
-contrast on every background, `theme-light` included. Tune it with `--divider-opacity`, `--divider-spacing`
-(default 8px), `--divider-length` (horizontal, default 90%) and `--divider-scale` (vertical, default 0.9).
-Outside a flex row a vertical Divider is only `1em` tall.
+`Divider` is a 1px line in the `--border-strong` color, so it matches the other borders and adapts to
+`theme-light`. `<Divider />` runs across 90% of the parent's width; `<Divider orientation="vertical" />` is
+20px tall and centered in its row (e.g. between toolbar buttons). Tune it with `--divider-color`,
+`--divider-length` (90% / 20px) and `--divider-spacing` (8px / 6px).
 
 ## Using it in a new project (separate repo)
 

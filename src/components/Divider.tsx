@@ -6,7 +6,7 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
   orientation?: DividerOrientation;
 }
 
-/** A 1px line in the surrounding text color at `--divider-opacity`, so it contrasts on any background. */
+/** A 1px line in the `--border-strong` color, horizontal (90% wide) or vertical (20px tall). */
 export function Divider({ orientation = "horizontal", className, ...rest }: DividerProps) {
   return (
     <div

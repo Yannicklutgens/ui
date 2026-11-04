@@ -1,10 +1,9 @@
 /* ---------------------------------------------------------------------
-   Divider — currentColor at a fixed opacity, so it contrasts on any background
+   Divider — uses the border token, so it matches the other borders in every theme
 --------------------------------------------------------------------- */
 .divider {
   flex-shrink: 0;
-  background: currentColor;
-  opacity: var(--divider-opacity, 0.75);
+  background: var(--divider-color, var(--border-strong));
   border: 0;
 }
 
@@ -14,12 +13,10 @@
   margin: var(--divider-spacing, 8px) auto;
 }
 
-/* stretches to the flex row's height, then scales to 90% around its center
-   (a % height would need a parent with an explicit height) */
+/* a bit taller than the 16px icons, shorter than the 32px buttons */
 .divider-vertical {
   width: 1px;
-  align-self: stretch;
-  min-height: 1em;
-  margin: 0 var(--divider-spacing, 8px);
-  transform: scaleY(var(--divider-scale, 0.9));
+  height: var(--divider-length, 20px);
+  align-self: center;
+  margin: 0 var(--divider-spacing, 6px);
 }
