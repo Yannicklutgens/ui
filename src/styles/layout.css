@@ -122,6 +122,10 @@
 .page {
   padding: 28px 28px 64px;
 }
+/* a Panel with scroll="panel" fills the viewport; the space below it is --panel-gap, not the page padding */
+.page:has(.panel-fit) {
+  padding-bottom: var(--panel-gap, 24px);
+}
 .page-header {
   display: flex;
   align-items: center;

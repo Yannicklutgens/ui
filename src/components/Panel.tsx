@@ -45,11 +45,19 @@ export function Panel({
   useEffect(() => {
     if (!fitViewport) return;
     const measure = () => {
-      if (ref.current) setTop(ref.current.getBoundingClientRect().top + window.scrollY);
+      if (!ref.current) return;
+      const next = ref.current.getBoundingClientRect().top + window.scrollY;
+      setTop((t) => (t === next ? t : next));
     };
     measure();
+    // content above the panel can change height after mount (fonts, wrapping headers, alerts)
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, [fitViewport]);
 
   const scrollStyle =
@@ -63,7 +71,7 @@ export function Panel({
         } as CSSProperties)
       : undefined;
 
-  const classes = ["panel", scroll === "panel" ? "panel-scroll" : "", className]
+  const classes = ["panel", scroll === "panel" ? "panel-scroll" : "", fitViewport ? "panel-fit" : "", className]
     .filter(Boolean)
     .join(" ");
 

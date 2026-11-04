@@ -31,6 +31,8 @@ without them it is just the box, and a `List` inside it shows its own header in 
 `TableWrap` is a deprecated alias of `Panel`.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
+When it fits the viewport, the page's bottom padding becomes `--panel-gap` (24px) so the page itself
+doesn't scroll, and scrolling stays inside the panel body.
 
 Everything is styled with the tokens in `tokens.css` (dark by default). Add the `theme-light` class
 to any element, or `bodyTheme="light"` on a Panel (only its content, the header and footer stay as they are), to render its contents on white, for example
