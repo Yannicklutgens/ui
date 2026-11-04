@@ -3,7 +3,7 @@
 A small React component library carrying the dark, red-accent "ops dashboard" look used by
 this project — design tokens, base styles, and a set of ready-made components (Button, Card,
 Badge, StatTile, Panel, Avatar, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
-Select, Tooltip, Alert, Spinner, Toast).
+Select, Tooltip, Alert, Spinner, Toast, Divider).
 
 `Button` takes `label` to show a tooltip on hover and focus (e.g. `<Button icon="trash" label="Delete" />`);
 for an icon-only button it is also the default `aria-label`. Tooltips are rendered in `document.body`, so
@@ -42,6 +42,13 @@ derived from it. Give content next to an Avatar the `avatar-indent` class to lin
 with the Avatar's text (e.g. a subject above and a message below). It uses `--avatar-size`
 (default 40px) and `--avatar-gap` (default 12px); for another `size`, set `--avatar-size` on a
 shared parent too.
+
+`Divider` is a 1px line: `<Divider />` runs across 90% of the parent's width, and
+`<Divider orientation="vertical" />` inside a flex row (a toolbar or header) covers 90% of the row's height.
+It is painted in the surrounding text color at `--divider-opacity` (default 0.75), so it keeps the same
+contrast on every background, `theme-light` included. Tune it with `--divider-opacity`, `--divider-spacing`
+(default 8px), `--divider-length` (horizontal, default 90%) and `--divider-scale` (vertical, default 0.9).
+Outside a flex row a vertical Divider is only `1em` tall.
 
 ## Using it in a new project (separate repo)
 

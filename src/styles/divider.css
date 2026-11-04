@@ -1,0 +1,25 @@
+/* ---------------------------------------------------------------------
+   Divider — currentColor at a fixed opacity, so it contrasts on any background
+--------------------------------------------------------------------- */
+.divider {
+  flex-shrink: 0;
+  background: currentColor;
+  opacity: var(--divider-opacity, 0.75);
+  border: 0;
+}
+
+.divider-horizontal {
+  height: 1px;
+  width: var(--divider-length, 90%);
+  margin: var(--divider-spacing, 8px) auto;
+}
+
+/* stretches to the flex row's height, then scales to 90% around its center
+   (a % height would need a parent with an explicit height) */
+.divider-vertical {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1em;
+  margin: 0 var(--divider-spacing, 8px);
+  transform: scaleY(var(--divider-scale, 0.9));
+}
