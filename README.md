@@ -28,7 +28,7 @@ An item with `items` instead of `onSelect` is a submenu, opened on hover or with
 stay flush automatically, and `flush` drops the padding for other edge-to-edge content. Pass
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
 without them it is just the box, and a `List` inside it shows its own header in the same style.
-`title` on a List shows an `h2` section heading on the left of its header, after the select-all checkbox.
+`title` on a List shows a heading on the left of its header, after the select-all checkbox, styled like a smaller `PageHeader` title.
 `TableWrap` is a deprecated alias of `Panel`.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.

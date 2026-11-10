@@ -254,6 +254,9 @@
   h1 {
     font-size: 21px;
   }
+  .list-header-title {
+    font-size: 17px;
+  }
   .card,
   .stat-tile {
     padding: 16px;
