@@ -125,7 +125,7 @@ export function List({
               onToggle={() => onSelectedChange?.(allState === "all" ? [] : values)}
             />
           )}
-          {title && <h1 className="list-header-title">{title}</h1>}
+          {title && <h2 className="list-header-title">{title}</h2>}
           {selectable && selectedCount > 0 && <span className="list-header-count">{selectedCount} selected</span>}
           {header && <div className="panel-header-end">{header}</div>}
         </div>
