@@ -83,6 +83,11 @@ button.list-item:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (max-width: 480px) {
+  .list-header-title {
+    font-size: 17px;
+  }
+}
 
 .list-checkbox {
   display: inline-flex;
