@@ -56,8 +56,10 @@ function Checkbox({ state, label, onToggle }: { state: CheckState; label: string
 /** A preset, or the vertical row padding in px (default is 10, compact is 6). */
 export type ListDensity = "default" | "compact" | number;
 
-export interface ListProps extends HTMLAttributes<HTMLUListElement> {
+export interface ListProps extends Omit<HTMLAttributes<HTMLUListElement>, "title"> {
   density?: ListDensity;
+  /** Name shown on the left of the header, after the select-all checkbox. */
+  title?: ReactNode;
   /** Toolbar content shown above the rows, e.g. filters and buttons. */
   header?: ReactNode;
   /** Adds a checkbox to every ListItem that has a `value`, and a select-all checkbox to the header. */
@@ -68,6 +70,7 @@ export interface ListProps extends HTMLAttributes<HTMLUListElement> {
 
 export function List({
   density = "default",
+  title,
   header,
   selectable = false,
   selected = [],
@@ -113,7 +116,7 @@ export function List({
 
   return (
     <ListContext.Provider value={ctx}>
-      {(header || selectable) && (
+      {(title || header || selectable) && (
         <div className="panel-header list-header" style={densityStyle}>
           {selectable && (
             <Checkbox
@@ -122,6 +125,7 @@ export function List({
               onToggle={() => onSelectedChange?.(allState === "all" ? [] : values)}
             />
           )}
+          {title && <span className="list-header-title">{title}</span>}
           {selectable && selectedCount > 0 && <span className="list-header-count">{selectedCount} selected</span>}
           {header && <div className="panel-header-end">{header}</div>}
         </div>
