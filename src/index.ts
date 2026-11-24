@@ -7,6 +7,7 @@ export * from "./components/Panel";
 export * from "./components/Avatar";
 export * from "./components/List";
 export * from "./components/Field";
+export * from "./components/SearchInput";
 export * from "./components/Switch";
 export * from "./components/Tabs";
 export * from "./components/Modal";

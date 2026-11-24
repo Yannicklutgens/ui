@@ -23,6 +23,26 @@
   font-size: 12px;
   margin: 2px 0 0;
 }
+/* SearchInput: search icon inside the input */
+.search-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 260px;
+  max-width: 100%;
+}
+.search-input input {
+  width: 100%;
+  padding-left: 32px;
+}
+.search-input > .icon {
+  position: absolute;
+  left: 11px;
+  width: 14px;
+  height: 14px;
+  color: var(--text-faint);
+  pointer-events: none;
+}
 .copy-field-row {
   display: flex;
   gap: 8px;

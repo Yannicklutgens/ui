@@ -3,7 +3,7 @@
 A small React component library carrying the dark, red-accent "ops dashboard" look used by
 this project — design tokens, base styles, and a set of ready-made components (Button, Card,
 Badge, StatTile, Panel, Avatar, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
-Select, Tooltip, Alert, Spinner, Toast, Divider).
+Select, SearchInput, Tooltip, Alert, Spinner, Toast, Divider).
 
 `Button` takes `label` to show a tooltip on hover and focus (e.g. `<Button icon="trash" label="Delete" />`);
 for an icon-only button it is also the default `aria-label`. Tooltips are rendered in `document.body`, so
@@ -29,6 +29,8 @@ stay flush automatically, and `flush` drops the padding for other edge-to-edge c
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
 without them it is just the box, and a `List` inside it shows its own header in the same style.
 `title` on a List shows a heading on the left of its header, after the select-all checkbox, styled like a smaller `PageHeader` title.
+`hideTrailingOnMobile` on a List hides each row's `trailing` slot below 480px and lets the description use the
+full width; use it when the row actions are also reachable another way (selection toolbar, context menu).
 `TableWrap` is a deprecated alias of `Panel`.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
@@ -45,6 +47,10 @@ derived from it. Give content next to an Avatar the `avatar-indent` class to lin
 with the Avatar's text (e.g. a subject above and a message below). It uses `--avatar-size`
 (default 40px) and `--avatar-gap` (default 12px); for another `size`, set `--avatar-size` on a
 shared parent too.
+
+`SearchInput` is an `<input type="search">` with a search icon (260px wide by default; `className`/`style` go on
+the wrapper, other props on the input). `onClear` runs on Escape. Placed in a `PageHeader`'s `actions`, it takes its
+own full-width line under the title below 480px.
 
 `Divider` is a 1px line in the `--border-strong` color, so it matches the other borders and adapts to
 `theme-light`. `<Divider />` runs across 90% of the parent's width; `<Divider orientation="vertical" />` is

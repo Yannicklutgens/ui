@@ -150,6 +150,8 @@ button.list-item:hover {
   color: var(--text-faint);
   font-size: 12px;
   white-space: nowrap;
+  /* meta of different widths per row (dates) stays lined up on the right */
+  justify-self: end;
 }
 .list-item-trailing {
   grid-area: trailing;
@@ -178,5 +180,13 @@ button.list-item:hover {
   }
   .list-compact .list-item {
     row-gap: 0;
+  }
+  .list-mobile-no-trailing .list-item {
+    grid-template-areas:
+      "leading title meta"
+      "leading description description";
+  }
+  .list-mobile-no-trailing .list-item-trailing {
+    display: none;
   }
 }

@@ -66,6 +66,11 @@ export interface ListProps extends Omit<HTMLAttributes<HTMLUListElement>, "title
   selectable?: boolean;
   selected?: ListValue[];
   onSelectedChange?: (values: ListValue[]) => void;
+  /**
+   * Hides each row's `trailing` slot on small screens and lets the description use the full width.
+   * For lists whose row actions can also be reached another way (selection toolbar, context menu).
+   */
+  hideTrailingOnMobile?: boolean;
 }
 
 export function List({
@@ -75,6 +80,7 @@ export function List({
   selectable = false,
   selected = [],
   onSelectedChange,
+  hideTrailingOnMobile = false,
   className,
   style,
   children,
@@ -110,7 +116,12 @@ export function List({
   const allState: CheckState =
     selectedCount === 0 ? "none" : selectedCount === values.length ? "all" : "some";
 
-  const classes = ["list", density === "compact" ? "list-compact" : "", className].filter(Boolean).join(" ");
+  const classes = [
+    "list",
+    density === "compact" ? "list-compact" : "",
+    hideTrailingOnMobile ? "list-mobile-no-trailing" : "",
+    className,
+  ].filter(Boolean).join(" ");
   const densityStyle =
     typeof density === "number" ? ({ "--list-item-padding-y": `${density}px` } as CSSProperties) : undefined;
 

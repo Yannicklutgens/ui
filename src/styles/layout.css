@@ -258,4 +258,11 @@
   .stat-tile {
     padding: 16px;
   }
+  /* a search box in the page header gets its own full-width line under the title */
+  .page-actions:has(> .search-input) {
+    flex-basis: 100%;
+  }
+  .page-actions > .search-input {
+    width: 100%;
+  }
 }
