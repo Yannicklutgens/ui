@@ -226,6 +226,8 @@ button.list-item:hover {
 .list-item-swipe {
   position: relative;
   overflow: hidden;
+  /* keeps the row's z-index inside its own item, so rows scroll under a sticky list header */
+  isolation: isolate;
 }
 .list-item-swipe > .list-item {
   position: relative;
@@ -259,4 +261,14 @@ button.list-item:hover {
 .list-item-swipe-actions .btn-icon .icon {
   width: 18px;
   height: 18px;
+}
+/* destructive actions (variant="danger") are a solid red block when revealed */
+.list-item-swipe-actions .btn-danger,
+.list-item-swipe-actions .btn-danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+}
+/* inline (desktop) they stay neutral until hovered, so rows don't get a red icon on every line */
+.list-item-trailing .btn-danger.btn-borderless:not(:hover) {
+  color: inherit;
 }
