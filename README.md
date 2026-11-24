@@ -29,8 +29,11 @@ stay flush automatically, and `flush` drops the padding for other edge-to-edge c
 `headerStart` and/or `headerEnd` for a toolbar header with content on the left and/or right;
 without them it is just the box, and a `List` inside it shows its own header in the same style.
 `title` on a List shows a heading on the left of its header, after the select-all checkbox, styled like a smaller `PageHeader` title.
-`hideTrailingOnMobile` on a List hides each row's `trailing` slot below 480px and lets the description use the
-full width; use it when the row actions are also reachable another way (selection toolbar, context menu).
+`hideTrailingOnMobile` on a List takes each row's `trailing` slot out of the row below 480px, so the description
+uses the full width. On touch, the controls sit behind the row instead and are revealed by swiping it left; one row is
+open at a time, and a tap on the row or anywhere else closes it. The swiping row has an opaque background,
+`--list-row-bg` (default `--bg`); set it when the list sits on another background.
+Below 480px, lists that aren't `compact` also get bigger, touch-friendly rows (14px padding, 15px text, 18px checkboxes).
 `TableWrap` is a deprecated alias of `Panel`.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.

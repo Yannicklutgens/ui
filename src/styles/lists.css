@@ -189,4 +189,74 @@ button.list-item:hover {
   .list-mobile-no-trailing .list-item-trailing {
     display: none;
   }
+
+  /* Bigger, touch-friendly rows (like a mail app on a phone). Set on the list, so a numeric
+     density (an inline --list-item-padding-y on the same element) still wins; compact stays compact. */
+  .list:not(.list-compact) {
+    --list-item-padding-y: 14px;
+  }
+  .list:not(.list-compact) .list-item {
+    font-size: 15px;
+    row-gap: 4px;
+  }
+  .list:not(.list-compact) .list-item-meta {
+    font-size: 13px;
+  }
+  .list-checkbox {
+    width: 18px;
+    height: 18px;
+  }
+  .list-checkbox.checked::after {
+    width: 5px;
+    height: 9px;
+  }
+  .list-checkbox.mixed::after {
+    width: 10px;
+  }
+  .list-item-leading .btn-icon .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Swipe to reveal (List hideTrailingOnMobile on a small screen): the trailing
+   controls sit behind the row, which slides left to show them.
+--------------------------------------------------------------------- */
+.list-item-swipe {
+  position: relative;
+  overflow: hidden;
+}
+.list-item-swipe > .list-item {
+  position: relative;
+  z-index: 1;
+  touch-action: pan-y;
+  transition: transform 0.2s ease;
+  /* opaque, or the controls behind it show through */
+  background-color: var(--list-row-bg, var(--bg));
+}
+.list-item-swipe > .list-item.selected,
+.list-item-swipe > .list-item.active {
+  background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--list-row-bg, var(--bg));
+}
+.list-item-swipe > .list-item.emphasized:not(.selected):not(.active) {
+  background: var(--surface);
+}
+.list-item-swipe-actions {
+  position: absolute;
+  inset: 0 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-hover);
+  border-bottom: 1px solid var(--border);
+}
+.list-item-swipe-actions .btn-icon {
+  height: 100%;
+  margin: 0;
+  padding: 0 18px;
+  border-radius: 0;
+}
+.list-item-swipe-actions .btn-icon .icon {
+  width: 18px;
+  height: 18px;
 }
