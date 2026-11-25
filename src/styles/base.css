@@ -171,7 +171,8 @@ button:active:not(:disabled) {
   --btn-tone: var(--success);
   --btn-tone-soft: var(--success-soft);
   --btn-tone-border: var(--success-border);
-  --btn-tone-contrast: #ffffff;
+  /* white on this green is hard to read */
+  --btn-tone-contrast: #1b1b1f;
 }
 .btn-warning {
   --btn-tone: var(--warning);
