@@ -33,7 +33,10 @@ without them it is just the box, and a `List` inside it shows its own header in 
 uses the full width. On touch, the controls sit behind the row instead and are revealed by swiping it left; one row is
 open at a time, and a tap on the row or anywhere else closes it. A row's `leadingActions` (buttons at the start of the row, inline after
 `leading` on bigger screens) work the same way from the other side: on touch they sit behind the row and are revealed
-by swiping it right. `variant="danger"` buttons show as a solid red block
+by swiping it right. What sits behind the row can differ from the inline controls: `swipeLeading` and `swipeTrailing` set the
+left and right panels (they default to `leadingActions` and `trailing`, `null` leaves a side empty). For example
+`trailing={<>{send}{remove}</>}` with `swipeLeading={send}` and `swipeTrailing={remove}` shows both buttons on the
+right on desktop, and splits them over the two swipe directions on touch. `variant="danger"` buttons show as a solid red block
 there (inline on desktop they stay neutral until hovered). The swiping row has an opaque background,
 `--list-row-bg` (default `--bg`); set it when the list sits on another background.
 Below 480px, lists that aren't `compact` also get bigger, touch-friendly rows (14px padding, 15px text, 18px checkboxes).

@@ -24,8 +24,8 @@ interface ListContextValue {
   toggle: (value: ListValue) => void;
   register: (value: ListValue) => () => void;
   /**
-   * Row controls sit behind the row (hideTrailingOnMobile on a small screen): `trailing` is revealed by
-   * swiping the row left, `leadingActions` by swiping it right.
+   * Row controls sit behind the row (hideTrailingOnMobile on a small screen): `swipeTrailing` (default
+   * `trailing`) is revealed by swiping the row left, `swipeLeading` (default `leadingActions`) by swiping it right.
    */
   swipe: boolean;
   /** The row that is swiped open, only one at a time. */
@@ -192,12 +192,20 @@ export interface ListItemProps {
   description?: ReactNode;
   meta?: ReactNode;
   leading?: ReactNode;
-  /**
-   * Buttons at the start of the row. Inline after `leading` on bigger screens; in a List with
-   * `hideTrailingOnMobile` on a small screen they sit behind the row and are revealed by swiping it right.
-   */
+  /** Buttons at the start of the row, inline after `leading`. Not shown while the row swipes (see `swipeLeading`). */
   leadingActions?: ReactNode;
+  /** Controls at the end of the row. Not shown while the row swipes (see `swipeTrailing`). */
   trailing?: ReactNode;
+  /**
+   * Controls behind the row, revealed by swiping it right (List `hideTrailingOnMobile` on a small screen, touch).
+   * Defaults to `leadingActions`; `null` gives the row no left panel.
+   */
+  swipeLeading?: ReactNode;
+  /**
+   * Controls behind the row, revealed by swiping it left (List `hideTrailingOnMobile` on a small screen, touch).
+   * Defaults to `trailing`; `null` gives the row no right panel.
+   */
+  swipeTrailing?: ReactNode;
   emphasized?: boolean;
   active?: boolean;
   onClick?: MouseEventHandler<HTMLElement>;
@@ -216,6 +224,8 @@ export function ListItem({
   leading,
   leadingActions,
   trailing,
+  swipeLeading,
+  swipeTrailing,
   emphasized,
   active,
   onClick,
@@ -231,7 +241,10 @@ export function ListItem({
     if (selectable && register) return register(value!);
   }, [selectable, value, register]);
 
-  const swipe = useSwipe(!!list?.swipe && (!!trailing || !!leadingActions), list, !!leadingActions, !!trailing);
+  // what sits behind the row while swiping: its own props, or else the inline controls
+  const swipeStart = swipeLeading !== undefined ? swipeLeading : leadingActions;
+  const swipeEnd = swipeTrailing !== undefined ? swipeTrailing : trailing;
+  const swipe = useSwipe(!!list?.swipe && (!!swipeStart || !!swipeEnd), list, !!swipeStart, !!swipeEnd);
   const inlineLeadingActions = !!leadingActions && !swipe.enabled;
 
   const classes = (isActive: boolean) =>
@@ -317,26 +330,26 @@ export function ListItem({
   return (
     <li ref={swipe.itemRef} className="list-item-swipe">
       {row}
-      {leadingActions && (
+      {swipeStart && (
         <div ref={swipe.startRef} className="list-item-swipe-actions start" onClick={closeAfterClick}>
-          {leadingActions}
+          {swipeStart}
         </div>
       )}
-      {trailing && (
+      {swipeEnd && (
         <div ref={swipe.actionsRef} className="list-item-swipe-actions" onClick={closeAfterClick}>
-          {trailing}
+          {swipeEnd}
         </div>
       )}
     </li>
   );
 }
 
-// Swipe a row left (trailing) or right (leadingActions) to reveal the controls behind it. Touch and pen only,
+// Swipe a row left (swipeTrailing) or right (swipeLeading) to reveal the controls behind it. Touch and pen only,
 // mouse users get the inline slots on bigger screens. Vertical movement stays with the browser (touch-action: pan-y) so the list still scrolls.
 function useSwipe(enabled: boolean, list: ListContextValue | null, hasStart: boolean, hasEnd: boolean) {
   const id = useRef<symbol>(Symbol("list-item")).current;
   const itemRef = useRef<HTMLLIElement>(null);
-  // the panels behind the row: start (leadingActions, left) and end (trailing, right)
+  // the panels behind the row: start (swipeLeading, left) and end (swipeTrailing, right)
   const startRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
   const startWidth = () => (hasStart ? startRef.current?.offsetWidth ?? 0 : 0);
