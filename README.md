@@ -31,7 +31,9 @@ without them it is just the box, and a `List` inside it shows its own header in 
 `title` on a List shows a heading on the left of its header, after the select-all checkbox, styled like a smaller `PageHeader` title.
 `hideTrailingOnMobile` on a List takes each row's `trailing` slot out of the row below 480px, so the description
 uses the full width. On touch, the controls sit behind the row instead and are revealed by swiping it left; one row is
-open at a time, and a tap on the row or anywhere else closes it. `variant="danger"` buttons show as a solid red block
+open at a time, and a tap on the row or anywhere else closes it. A row's `leadingActions` (buttons at the start of the row, inline after
+`leading` on bigger screens) work the same way from the other side: on touch they sit behind the row and are revealed
+by swiping it right. `variant="danger"` buttons show as a solid red block
 there (inline on desktop they stay neutral until hovered). The swiping row has an opaque background,
 `--list-row-bg` (default `--bg`); set it when the list sits on another background.
 Below 480px, lists that aren't `compact` also get bigger, touch-friendly rows (14px padding, 15px text, 18px checkboxes).

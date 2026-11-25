@@ -23,7 +23,10 @@ interface ListContextValue {
   isSelected: (value: ListValue) => boolean;
   toggle: (value: ListValue) => void;
   register: (value: ListValue) => () => void;
-  /** Trailing controls sit behind the row and are revealed by swiping it left (hideTrailingOnMobile on a small screen). */
+  /**
+   * Row controls sit behind the row (hideTrailingOnMobile on a small screen): `trailing` is revealed by
+   * swiping the row left, `leadingActions` by swiping it right.
+   */
   swipe: boolean;
   /** The row that is swiped open, only one at a time. */
   openSwipe: symbol | null;
@@ -189,6 +192,11 @@ export interface ListItemProps {
   description?: ReactNode;
   meta?: ReactNode;
   leading?: ReactNode;
+  /**
+   * Buttons at the start of the row. Inline after `leading` on bigger screens; in a List with
+   * `hideTrailingOnMobile` on a small screen they sit behind the row and are revealed by swiping it right.
+   */
+  leadingActions?: ReactNode;
   trailing?: ReactNode;
   emphasized?: boolean;
   active?: boolean;
@@ -206,6 +214,7 @@ export function ListItem({
   description,
   meta,
   leading,
+  leadingActions,
   trailing,
   emphasized,
   active,
@@ -222,7 +231,8 @@ export function ListItem({
     if (selectable && register) return register(value!);
   }, [selectable, value, register]);
 
-  const swipe = useSwipe(!!list?.swipe && !!trailing, list);
+  const swipe = useSwipe(!!list?.swipe && (!!trailing || !!leadingActions), list, !!leadingActions, !!trailing);
+  const inlineLeadingActions = !!leadingActions && !swipe.enabled;
 
   const classes = (isActive: boolean) =>
     ["list-item", emphasized ? "emphasized" : "", isSelected ? "selected" : "", isActive ? "active" : "", className]
@@ -231,7 +241,7 @@ export function ListItem({
 
   const content = (
     <>
-      {(selectable || leading) && (
+      {(selectable || leading || inlineLeadingActions) && (
         <span className="list-item-leading">
           {selectable && (
             <Checkbox
@@ -241,6 +251,18 @@ export function ListItem({
             />
           )}
           {leading}
+          {inlineLeadingActions && (
+            // like the trailing slot: the buttons act on their own, not as a click on the row
+            <span
+              className="list-item-leading-actions"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              {leadingActions}
+            </span>
+          )}
         </span>
       )}
       <span className="list-item-title">{title}</span>
@@ -285,31 +307,40 @@ export function ListItem({
 
   if (!swipe.enabled) return <li>{row}</li>;
 
+  // like the inline slots: controls act on their own, then the row closes
+  const closeAfterClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    swipe.close();
+  };
+
   return (
     <li ref={swipe.itemRef} className="list-item-swipe">
       {row}
-      <div
-        ref={swipe.actionsRef}
-        className="list-item-swipe-actions"
-        // like the inline trailing slot: controls act on their own, then the row closes
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          swipe.close();
-        }}
-      >
-        {trailing}
-      </div>
+      {leadingActions && (
+        <div ref={swipe.startRef} className="list-item-swipe-actions start" onClick={closeAfterClick}>
+          {leadingActions}
+        </div>
+      )}
+      {trailing && (
+        <div ref={swipe.actionsRef} className="list-item-swipe-actions" onClick={closeAfterClick}>
+          {trailing}
+        </div>
+      )}
     </li>
   );
 }
 
-// Swipe a row left to reveal the controls behind it. Touch and pen only, mouse users get the inline trailing slot
-// on bigger screens. Vertical movement stays with the browser (touch-action: pan-y) so the list still scrolls.
-function useSwipe(enabled: boolean, list: ListContextValue | null) {
+// Swipe a row left (trailing) or right (leadingActions) to reveal the controls behind it. Touch and pen only,
+// mouse users get the inline slots on bigger screens. Vertical movement stays with the browser (touch-action: pan-y) so the list still scrolls.
+function useSwipe(enabled: boolean, list: ListContextValue | null, hasStart: boolean, hasEnd: boolean) {
   const id = useRef<symbol>(Symbol("list-item")).current;
   const itemRef = useRef<HTMLLIElement>(null);
+  // the panels behind the row: start (leadingActions, left) and end (trailing, right)
+  const startRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
+  const startWidth = () => (hasStart ? startRef.current?.offsetWidth ?? 0 : 0);
+  const endWidth = () => (hasEnd ? actionsRef.current?.offsetWidth ?? 0 : 0);
   const [offset, setOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
   const offsetRef = useRef(0);
@@ -367,8 +398,8 @@ function useSwipe(enabled: boolean, list: ListContextValue | null) {
       setDragging(true);
       e.currentTarget.setPointerCapture(e.pointerId);
     }
-    const width = actionsRef.current?.offsetWidth ?? 0;
-    move(Math.min(0, Math.max(-width, g.start + dx)));
+    // a row only moves towards a side that has controls
+    move(Math.min(startWidth(), Math.max(-endWidth(), g.start + dx)));
   }
 
   function onPointerEnd() {
@@ -376,9 +407,13 @@ function useSwipe(enabled: boolean, list: ListContextValue | null) {
     gesture.current = null;
     if (!g?.swiping) return;
     setDragging(false);
-    const width = actionsRef.current?.offsetWidth ?? 0;
-    if (width > 0 && offsetRef.current < -width / 2) {
-      move(-width);
+    const start = startWidth();
+    const end = endWidth();
+    if (start > 0 && offsetRef.current > start / 2) {
+      move(start);
+      setOpenSwipe?.(id);
+    } else if (end > 0 && offsetRef.current < -end / 2) {
+      move(-end);
       setOpenSwipe?.(id);
     } else {
       close();
@@ -408,7 +443,7 @@ function useSwipe(enabled: boolean, list: ListContextValue | null) {
       }
     : {};
 
-  return { enabled, rowProps, itemRef, actionsRef, close };
+  return { enabled, rowProps, itemRef, startRef, actionsRef, close };
 }
 
 type PointerEvent_ = ReactPointerEvent<HTMLElement>;

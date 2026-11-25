@@ -64,6 +64,11 @@ button.list-item:hover {
   align-items: center;
   gap: 8px;
 }
+.list-item-leading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 .list-header {
   padding: 6px var(--list-item-padding-x, 14px);
@@ -221,7 +226,8 @@ button.list-item:hover {
 
 /* ---------------------------------------------------------------------
    Swipe to reveal (List hideTrailingOnMobile on a small screen): the trailing
-   controls sit behind the row, which slides left to show them.
+   controls sit behind the row on the right and the row slides left to show them;
+   leadingActions sit on the left and the row slides right.
 --------------------------------------------------------------------- */
 .list-item-swipe {
   position: relative;
@@ -252,6 +258,9 @@ button.list-item:hover {
   background: var(--surface-hover);
   border-bottom: 1px solid var(--border);
 }
+.list-item-swipe-actions.start {
+  inset: 0 auto 0 0;
+}
 .list-item-swipe-actions .btn-icon {
   height: 100%;
   margin: 0;
@@ -269,6 +278,7 @@ button.list-item:hover {
   color: #fff;
 }
 /* inline (desktop) they stay neutral until hovered, so rows don't get a red icon on every line */
-.list-item-trailing .btn-danger.btn-borderless:not(:hover) {
+.list-item-trailing .btn-danger.btn-borderless:not(:hover),
+.list-item-leading-actions .btn-danger.btn-borderless:not(:hover) {
   color: inherit;
 }
