@@ -159,14 +159,34 @@ button:active:not(:disabled) {
   border-color: var(--accent-dark);
 }
 
+/* Coloured variants (danger, success, warning): one set of rules, driven by the --btn-tone* variables.
+   --btn-tone-contrast is the text colour on a solid --btn-tone background (e.g. in a list swipe panel). */
 .btn-danger {
-  color: var(--danger);
-  border-color: var(--danger-border);
-  background: var(--danger-soft);
+  --btn-tone: var(--danger);
+  --btn-tone-soft: var(--danger-soft);
+  --btn-tone-border: var(--danger-border);
+  --btn-tone-contrast: #ffffff;
 }
-.btn-danger:hover:not(:disabled) {
-  background: rgba(255, 107, 107, 0.22);
-  border-color: var(--danger-border);
+.btn-success {
+  --btn-tone: var(--success);
+  --btn-tone-soft: var(--success-soft);
+  --btn-tone-border: var(--success-border);
+  --btn-tone-contrast: #ffffff;
+}
+.btn-warning {
+  --btn-tone: var(--warning);
+  --btn-tone-soft: var(--warning-soft);
+  --btn-tone-border: var(--warning-border);
+  --btn-tone-contrast: #1b1b1f;
+}
+:is(.btn-danger, .btn-success, .btn-warning) {
+  color: var(--btn-tone);
+  border-color: var(--btn-tone-border);
+  background: var(--btn-tone-soft);
+}
+:is(.btn-danger, .btn-success, .btn-warning):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--btn-tone) 22%, transparent);
+  border-color: var(--btn-tone-border);
 }
 
 .btn-link {
@@ -217,8 +237,8 @@ button:active:not(:disabled) {
 .btn-primary.btn-borderless:hover:not(:disabled) {
   background: var(--accent-soft);
 }
-.btn-danger.btn-borderless:hover:not(:disabled) {
-  background: var(--danger-soft);
+:is(.btn-danger, .btn-success, .btn-warning).btn-borderless:hover:not(:disabled) {
+  background: var(--btn-tone-soft);
 }
 /* Icon-only borderless buttons: round, with a translucent hover so the
    circle shows on any background (including hovered/selected rows). */

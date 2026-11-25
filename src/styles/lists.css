@@ -271,14 +271,14 @@ button.list-item:hover {
   width: 18px;
   height: 18px;
 }
-/* destructive actions (variant="danger") are a solid red block when revealed */
-.list-item-swipe-actions .btn-danger,
-.list-item-swipe-actions .btn-danger:hover:not(:disabled) {
-  background: var(--danger);
-  color: #fff;
+/* coloured actions (variant danger/success/warning) are a solid block in their colour when revealed */
+.list-item-swipe-actions :is(.btn-danger, .btn-success, .btn-warning),
+.list-item-swipe-actions :is(.btn-danger, .btn-success, .btn-warning):hover:not(:disabled) {
+  background: var(--btn-tone);
+  color: var(--btn-tone-contrast);
 }
-/* inline (desktop) they stay neutral until hovered, so rows don't get a red icon on every line */
-.list-item-trailing .btn-danger.btn-borderless:not(:hover),
-.list-item-leading-actions .btn-danger.btn-borderless:not(:hover) {
+/* inline (desktop) they stay neutral until hovered, so rows don't get a coloured icon on every line */
+.list-item-trailing :is(.btn-danger, .btn-success, .btn-warning).btn-borderless:not(:hover),
+.list-item-leading-actions :is(.btn-danger, .btn-success, .btn-warning).btn-borderless:not(:hover) {
   color: inherit;
 }

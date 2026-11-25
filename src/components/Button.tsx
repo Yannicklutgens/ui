@@ -2,9 +2,13 @@ import { ButtonHTMLAttributes, FocusEvent, MouseEvent, forwardRef } from "react"
 import { Icon, IconType, resolveColor } from "./Icon";
 import { useTooltip } from "./useTooltip";
 
-export type ButtonVariant = "default" | "primary" | "danger" | "link";
+export type ButtonVariant = "default" | "primary" | "danger" | "success" | "warning" | "link";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * `primary` is the solid accent button. `danger`, `success` and `warning` are tinted in the --danger,
+   * --success or --warning colour (a solid block in a list swipe panel). `link` looks like a text link.
+   */
   variant?: ButtonVariant;
   /** Icon name (or custom path, see Icon). Without children the button becomes icon-only and needs a label or aria-label. */
   icon?: string;
@@ -22,6 +26,8 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   default: "",
   primary: "btn-primary",
   danger: "btn-danger",
+  success: "btn-success",
+  warning: "btn-warning",
   link: "btn-link",
 };
 

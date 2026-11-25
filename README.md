@@ -5,6 +5,8 @@ this project — design tokens, base styles, and a set of ready-made components 
 Badge, StatTile, Panel, Avatar, Field, Switch, Tabs, Modal, Log, AuthCard, AppShell, PageHeader,
 Select, SearchInput, Tooltip, Alert, Spinner, Toast, Divider).
 
+`Button` `variant` is `default`, `primary`, `danger`, `success`, `warning` or `link`; danger, success and warning are
+tinted in their token colour (`--danger`, `--success`, `--warning`).
 `Button` takes `label` to show a tooltip on hover and focus (e.g. `<Button icon="trash" label="Delete" />`);
 for an icon-only button it is also the default `aria-label`. Tooltips are rendered in `document.body`, so
 scrolling or overflow-hidden parents don't clip them.
@@ -36,8 +38,8 @@ open at a time, and a tap on the row or anywhere else closes it. A row's `leadin
 by swiping it right. What sits behind the row can differ from the inline controls: `swipeLeading` and `swipeTrailing` set the
 left and right panels (they default to `leadingActions` and `trailing`, `null` leaves a side empty). For example
 `trailing={<>{send}{remove}</>}` with `swipeLeading={send}` and `swipeTrailing={remove}` shows both buttons on the
-right on desktop, and splits them over the two swipe directions on touch. `variant="danger"` buttons show as a solid red block
-there (inline on desktop they stay neutral until hovered). The swiping row has an opaque background,
+right on desktop, and splits them over the two swipe directions on touch. Coloured buttons (`variant="danger"`, `"success"`, `"warning"`) show as a solid block in
+their colour there (inline on desktop they stay neutral until hovered). The swiping row has an opaque background,
 `--list-row-bg` (default `--bg`); set it when the list sits on another background.
 Below 480px, lists that aren't `compact` also get bigger, touch-friendly rows (14px padding, 15px text, 18px checkboxes).
 `TableWrap` is a deprecated alias of `Panel`.
