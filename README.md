@@ -43,6 +43,31 @@ their colour there (inline on desktop they stay neutral until hovered). The swip
 `--list-row-bg` (default `--bg`); set it when the list sits on another background.
 Below 480px, lists that aren't `compact` also get bigger, touch-friendly rows (14px padding, 15px text, 18px checkboxes).
 `TableWrap` is a deprecated alias of `Panel`.
+`Table` is a composable table with the same row features as `List` (selection, row links and `onClick`,
+`leadingActions`/`trailing` and swipe panels with `hideTrailingOnMobile`), plus sortable columns:
+
+```tsx
+<Table title="Werk dagen" sort={sort} onSortChange={setSort} selectable selected={sel} onSelectedChange={setSel} hideTrailingOnMobile>
+  <TableHead>
+    <TableHeader sortKey="date" width="1fr">Datum</TableHeader>
+    <TableHeader sortKey="hours" align="right" hideOnMobile>Uren</TableHeader>
+  </TableHead>
+  {days.map((d) => (
+    <TableRow key={d.id} value={d.id} to={`/days/${d.id}`} trailing={remove(d)}>
+      <TableCell>{d.date}</TableCell>
+      <TableCell>{d.hours}</TableCell>
+    </TableRow>
+  ))}
+</Table>
+```
+
+It is a CSS grid (`role="table"`) rather than a `<table>`, so rows can be links and slide; each row is a subgrid,
+so columns still line up. `TableHeader` sets the column: `width` (a grid track, default `auto`), `align`, `sortKey` and
+`hideOnMobile`; TableCells follow their header by position. `sort`/`onSortChange` are controlled, the app sorts the
+rows. `overflow` sets what happens below 480px: `"hide"` (default) leaves out the `hideOnMobile` columns, `"stack"` turns
+each row into a card of "label: value" lines (labels from the header text, or `label` on the TableHeader), and
+`"scroll"` keeps every column and scrolls sideways (rows don't swipe then, their controls stay inline). `density` works
+like on a List.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
 When it fits the viewport, the page's bottom padding becomes `--panel-gap` (24px) so the page itself

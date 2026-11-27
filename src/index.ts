@@ -23,3 +23,4 @@ export * from "./components/Spinner";
 export * from "./components/Toast";
 export * from "./components/CopyField";
 export * from "./components/Divider";
+export * from "./components/Table";

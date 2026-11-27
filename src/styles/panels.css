@@ -36,7 +36,7 @@
 }
 /* tables and Lists bring their own cell/row padding */
 .panel-body-flush,
-.panel-body:has(> table, > .list, > .list-header) {
+.panel-body:has(> table, > .table, > .list, > .list-header) {
   padding: 0;
 }
 
@@ -48,7 +48,7 @@
   padding: 0 var(--panel-padding) var(--panel-padding);
 }
 .panel-body-flush + .panel-footer,
-.panel-body:has(> table, > .list, > .list-header) + .panel-footer,
+.panel-body:has(> table, > .table, > .list, > .list-header) + .panel-footer,
 .panel-body.theme-light + .panel-footer,
 .panel-body.theme-dark + .panel-footer {
   min-height: 40px;

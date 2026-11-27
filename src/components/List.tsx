@@ -1,24 +1,21 @@
 import {
   CSSProperties,
   HTMLAttributes,
-  KeyboardEvent,
   MouseEvent,
   MouseEventHandler,
-  PointerEvent as ReactPointerEvent,
   ReactNode,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { NavLink } from "react-router-dom";
+import { Checkbox, MOBILE_QUERY, RowValue, SwipeGroup, useMediaQuery, useSelection, useSwipe } from "./internal/rows";
 
-export type ListValue = string | number;
+export type ListValue = RowValue;
 
-interface ListContextValue {
+interface ListContextValue extends SwipeGroup {
   selectable: boolean;
   isSelected: (value: ListValue) => boolean;
   toggle: (value: ListValue) => void;
@@ -28,56 +25,9 @@ interface ListContextValue {
    * `trailing`) is revealed by swiping the row left, `swipeLeading` (default `leadingActions`) by swiping it right.
    */
   swipe: boolean;
-  /** The row that is swiped open, only one at a time. */
-  openSwipe: symbol | null;
-  setOpenSwipe: (id: symbol | null) => void;
-}
-
-const MOBILE_QUERY = "(max-width: 480px)";
-// movement before a touch counts as a horizontal swipe
-const SWIPE_THRESHOLD = 8;
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
-  useEffect(() => {
-    const mql = window.matchMedia(query);
-    const onChange = () => setMatches(mql.matches);
-    onChange();
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, [query]);
-  return matches;
 }
 
 const ListContext = createContext<ListContextValue | null>(null);
-
-type CheckState = "none" | "some" | "all";
-
-// A span instead of <input type="checkbox">: rows can be links, and a native checkbox
-// inside a link doesn't reliably toggle once the link's navigation is prevented.
-function Checkbox({ state, label, onToggle }: { state: CheckState; label: string; onToggle: () => void }) {
-  function handle(e: MouseEvent | KeyboardEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    onToggle();
-  }
-
-  return (
-    <span
-      role="checkbox"
-      aria-checked={state === "all" ? true : state === "some" ? "mixed" : false}
-      aria-label={label}
-      tabIndex={0}
-      className={["list-checkbox", state === "all" ? "checked" : "", state === "some" ? "mixed" : ""]
-        .filter(Boolean)
-        .join(" ")}
-      onClick={handle}
-      onKeyDown={(e) => {
-        if (e.key === " " || e.key === "Enter") handle(e);
-      }}
-    />
-  );
-}
 
 /** A preset, or the vertical row padding in px (default is 10, compact is 6). */
 export type ListDensity = "default" | "compact" | number;
@@ -112,20 +62,7 @@ export function List({
   children,
   ...rest
 }: ListProps) {
-  // values of the rows currently rendered, so select-all knows what "all" is
-  const [values, setValues] = useState<ListValue[]>([]);
-
-  const register = useCallback((value: ListValue) => {
-    setValues((v) => [...v, value]);
-    return () => setValues((v) => v.filter((x) => x !== value));
-  }, []);
-
-  // drop selections whose rows are gone, e.g. after switching folders
-  useEffect(() => {
-    if (!selectable) return;
-    const kept = selected.filter((v) => values.includes(v));
-    if (kept.length !== selected.length) onSelectedChange?.(kept);
-  }, [values]);
+  const selection = useSelection(selectable, selected, onSelectedChange);
 
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const swipe = hideTrailingOnMobile && isMobile;
@@ -134,20 +71,17 @@ export function List({
   const ctx = useMemo<ListContextValue>(
     () => ({
       selectable,
-      isSelected: (v) => selected.includes(v),
-      toggle: (v) =>
-        onSelectedChange?.(selected.includes(v) ? selected.filter((x) => x !== v) : [...selected, v]),
-      register,
+      isSelected: selection.isSelected,
+      toggle: selection.toggle,
+      register: selection.register,
       swipe,
       openSwipe,
       setOpenSwipe,
     }),
-    [selectable, selected, onSelectedChange, register, swipe, openSwipe],
+    [selectable, selected, onSelectedChange, selection.register, swipe, openSwipe],
   );
 
-  const selectedCount = values.filter((v) => selected.includes(v)).length;
-  const allState: CheckState =
-    selectedCount === 0 ? "none" : selectedCount === values.length ? "all" : "some";
+  const { selectedCount, allState } = selection;
 
   const classes = [
     "list",
@@ -166,7 +100,7 @@ export function List({
             <Checkbox
               state={allState}
               label="Select all"
-              onToggle={() => onSelectedChange?.(allState === "all" ? [] : values)}
+              onToggle={selection.toggleAll}
             />
           )}
           {title && <h2 className="list-header-title">{title}</h2>}
@@ -244,7 +178,7 @@ export function ListItem({
   // what sits behind the row while swiping: its own props, or else the inline controls
   const swipeStart = swipeLeading !== undefined ? swipeLeading : leadingActions;
   const swipeEnd = swipeTrailing !== undefined ? swipeTrailing : trailing;
-  const swipe = useSwipe(!!list?.swipe && (!!swipeStart || !!swipeEnd), list, !!swipeStart, !!swipeEnd);
+  const swipe = useSwipe<HTMLLIElement>(!!list?.swipe && (!!swipeStart || !!swipeEnd), list, !!swipeStart, !!swipeEnd);
   const inlineLeadingActions = !!leadingActions && !swipe.enabled;
 
   const classes = (isActive: boolean) =>
@@ -343,120 +277,3 @@ export function ListItem({
     </li>
   );
 }
-
-// Swipe a row left (swipeTrailing) or right (swipeLeading) to reveal the controls behind it. Touch and pen only,
-// mouse users get the inline slots on bigger screens. Vertical movement stays with the browser (touch-action: pan-y) so the list still scrolls.
-function useSwipe(enabled: boolean, list: ListContextValue | null, hasStart: boolean, hasEnd: boolean) {
-  const id = useRef<symbol>(Symbol("list-item")).current;
-  const itemRef = useRef<HTMLLIElement>(null);
-  // the panels behind the row: start (swipeLeading, left) and end (swipeTrailing, right)
-  const startRef = useRef<HTMLDivElement>(null);
-  const actionsRef = useRef<HTMLDivElement>(null);
-  const startWidth = () => (hasStart ? startRef.current?.offsetWidth ?? 0 : 0);
-  const endWidth = () => (hasEnd ? actionsRef.current?.offsetWidth ?? 0 : 0);
-  const [offset, setOffset] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const offsetRef = useRef(0);
-  const gesture = useRef<{ x: number; y: number; start: number; swiping: boolean } | null>(null);
-  // the last touch was a swipe: swallow the click that may follow it
-  const swiped = useRef(false);
-
-  const isOpen = enabled && list?.openSwipe === id;
-  const setOpenSwipe = list?.setOpenSwipe;
-
-  function move(to: number) {
-    offsetRef.current = to;
-    setOffset(to);
-  }
-
-  const close = useCallback(() => {
-    move(0);
-    setOpenSwipe?.(null);
-  }, [setOpenSwipe]);
-
-  // another row opened, or swiping got turned off (e.g. the screen got wider)
-  useEffect(() => {
-    if (!isOpen && !gesture.current?.swiping && offsetRef.current !== 0) move(0);
-  }, [isOpen]);
-
-  // a tap anywhere outside the open row closes it
-  useEffect(() => {
-    if (!isOpen) return;
-    function onPointerDown(e: PointerEvent) {
-      if (!itemRef.current?.contains(e.target as Node)) close();
-    }
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [isOpen, close]);
-
-  function onPointerDown(e: PointerEvent_) {
-    swiped.current = false;
-    if (e.pointerType === "mouse") return;
-    gesture.current = { x: e.clientX, y: e.clientY, start: offsetRef.current, swiping: false };
-  }
-
-  function onPointerMove(e: PointerEvent_) {
-    const g = gesture.current;
-    if (!g) return;
-    const dx = e.clientX - g.x;
-    const dy = e.clientY - g.y;
-    if (!g.swiping) {
-      if (Math.abs(dy) > SWIPE_THRESHOLD && Math.abs(dy) >= Math.abs(dx)) {
-        gesture.current = null; // a scroll, not a swipe
-        return;
-      }
-      if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-      g.swiping = true;
-      swiped.current = true;
-      setDragging(true);
-      e.currentTarget.setPointerCapture(e.pointerId);
-    }
-    // a row only moves towards a side that has controls
-    move(Math.min(startWidth(), Math.max(-endWidth(), g.start + dx)));
-  }
-
-  function onPointerEnd() {
-    const g = gesture.current;
-    gesture.current = null;
-    if (!g?.swiping) return;
-    setDragging(false);
-    const start = startWidth();
-    const end = endWidth();
-    if (start > 0 && offsetRef.current > start / 2) {
-      move(start);
-      setOpenSwipe?.(id);
-    } else if (end > 0 && offsetRef.current < -end / 2) {
-      move(-end);
-      setOpenSwipe?.(id);
-    } else {
-      close();
-    }
-  }
-
-  // after a swipe, or on an open row, a tap only closes it: no navigation, no row onClick
-  function onClickCapture(e: MouseEvent) {
-    if (!swiped.current && !isOpen) return;
-    e.preventDefault();
-    e.stopPropagation();
-    swiped.current = false;
-    if (isOpen) close();
-  }
-
-  const rowProps = enabled
-    ? {
-        onPointerDown,
-        onPointerMove,
-        onPointerUp: onPointerEnd,
-        onPointerCancel: onPointerEnd,
-        onClickCapture,
-        style: {
-          transform: offset ? `translateX(${offset}px)` : undefined,
-          transition: dragging ? "none" : undefined,
-        } as CSSProperties,
-      }
-    : {};
-
-  return { enabled, rowProps, itemRef, startRef, actionsRef, close };
-}
-
-type PointerEvent_ = ReactPointerEvent<HTMLElement>;
