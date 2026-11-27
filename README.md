@@ -68,6 +68,9 @@ rows. `overflow` sets what happens below 480px: `"hide"` (default) leaves out th
 each row into a card of "label: value" lines (labels from the header text, or `label` on the TableHeader), and
 `"scroll"` keeps every column and scrolls sideways (rows don't swipe then, their controls stay inline). `density` works
 like on a List.
+`TableFoot` holds total rows under the body: `<TableFoot title="Totaal"><TableRow><TableCell>2 dagen</TableCell><TableCell>15:30</TableCell></TableRow></TableFoot>`.
+Its rows line up with the columns like the others; `title` is a full-width first row.
+`size="small"` on a `Button` makes it compact (about 26px), so it fits a Panel header/footer bar or a table row without making it taller.
 `footerStart`/`footerEnd` add a footer row the same way. `scroll="panel"` makes the panel fit the
 viewport (or `maxHeight`) with a scrolling body; the default `scroll="page"` lets the page scroll.
 When it fits the viewport, the page's bottom padding becomes `--panel-gap` (24px) so the page itself

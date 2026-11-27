@@ -18,6 +18,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   borderless?: boolean;
   /** Text and icon colour: any CSS colour or a token (accent, danger, success, warning, muted, faint). */
   color?: string;
+  /** `small` is a compact button (about 26px tall) that fits a 40px Panel header/footer bar or a table row without growing it. */
+  size?: "default" | "small";
   /** Text shown in a tooltip on hover and focus (not while disabled). Also the default aria-label of an icon-only button. */
   label?: string;
 }
@@ -38,6 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     iconType,
     iconPosition = "start",
     borderless,
+    size = "default",
     color,
     className,
     style,
@@ -65,6 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     VARIANT_CLASS[variant],
     icon ? (iconOnly ? "btn-icon" : "btn-with-icon") : "",
     borderless ? "btn-borderless" : "",
+    size === "small" ? "btn-sm" : "",
     className,
   ]
     .filter(Boolean)

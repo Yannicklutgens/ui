@@ -419,6 +419,26 @@ export function TableRow({
   );
 }
 
+export interface TableFootProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  /** A full-width first row, e.g. "Totaal". */
+  title?: ReactNode;
+}
+
+/** Total rows under the body: put TableRows with TableCells in it, they line up with the columns like the other rows. */
+export function TableFoot({ title, className, children, ...rest }: TableFootProps) {
+  useTable("TableFoot");
+  return (
+    <div role="rowgroup" className={["table-foot", className].filter(Boolean).join(" ")} {...rest}>
+      {title && (
+        <div role="row" className="table-row table-foot-title">
+          <span role="cell" className="table-cell">{title}</span>
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}
+
 export interface TableCellProps extends HTMLAttributes<HTMLSpanElement> {
   /** Defaults to the align of the column's TableHeader. */
   align?: TableAlign;

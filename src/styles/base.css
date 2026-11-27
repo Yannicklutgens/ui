@@ -224,6 +224,15 @@ button:active:not(:disabled) {
   height: 16px;
 }
 
+/* size="small": fits a 40px panel bar or a table row without growing it */
+.btn-sm {
+  padding: 4px 12px;
+  font-size: 13px;
+}
+.btn-sm.btn-icon {
+  padding: 5px;
+}
+
 .btn-borderless {
   background: transparent;
   border-color: transparent;

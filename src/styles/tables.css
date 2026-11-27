@@ -110,6 +110,23 @@ tbody tr:hover td {
 .table-head {
   background: var(--bg-elevated);
 }
+
+/* TableFoot: total rows under the body, on the same column tracks */
+.table-foot {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  border-top: 1px solid var(--border-strong);
+}
+.table-foot > .table-row {
+  font-weight: 600;
+}
+.table-foot > .table-row:last-child {
+  border-bottom: none;
+}
+.table-foot-title .table-cell {
+  grid-column: 1 / -1;
+}
 .table-head .table-cell {
   font-size: 11px;
   text-transform: uppercase;
@@ -152,7 +169,7 @@ button.table-row {
 }
 a.table-row:hover,
 button.table-row:hover,
-div.table-row:not(.table-head):hover {
+div.table-row:not(.table-head):not(.table-foot > .table-row):hover {
   background: var(--surface-hover);
 }
 .table-row.emphasized {
@@ -265,6 +282,12 @@ div.table-row:not(.table-head):hover {
   .table-overflow-stack .table-cell-trailing {
     grid-column: 3;
     grid-row: 1 / span 50;
+  }
+  .table-overflow-stack .table-foot {
+    display: block;
+  }
+  .table-overflow-stack .table-cell:empty {
+    display: none;
   }
   /* the header row only keeps its select-all checkbox */
   .table-overflow-stack .table-head .table-cell:not(.table-cell-leading) {
