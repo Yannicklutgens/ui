@@ -88,6 +88,11 @@ shared parent too.
 the wrapper, other props on the input). `onClear` runs on Escape. Placed in a `PageHeader`'s `actions`, it takes its
 own full-width line under the title below 480px.
 
+`back` on a `PageHeader` puts a back button in front of the title. It goes up the URL path, not back in the browser
+history: `back` (or `back={1}`) goes up one segment (`/a/b/c` → `/a/b`), a number goes up that many
+(`back={2}`: `/1/2/3/4/5` → `/1/2/3`), and a string is the path to go to (`back="/workmonths"`). `backLabel` sets
+its tooltip and aria-label (default "Back"). It needs a Router; a PageHeader without `back` doesn't.
+
 `Divider` is a 1px line in the `--border-strong` color, so it matches the other borders and adapts to
 `theme-light`. `<Divider />` runs across 90% of the parent's width; `<Divider orientation="vertical" />` is
 20px tall and centered in its row (e.g. between toolbar buttons). Tune it with `--divider-color`,
