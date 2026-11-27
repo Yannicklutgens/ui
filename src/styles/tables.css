@@ -117,9 +117,7 @@ tbody tr:hover td {
   display: grid;
   grid-template-columns: subgrid;
   border-top: 1px solid var(--border-strong);
-}
-.table-foot > .table-row {
-  font-weight: 600;
+  background: var(--bg-elevated);
 }
 .table-foot > .table-row:last-child {
   border-bottom: none;
@@ -127,7 +125,7 @@ tbody tr:hover td {
 .table-foot-title .table-cell {
   grid-column: 1 / -1;
 }
-.table-head .table-cell {
+:is(.table-head, .table-foot) .table-cell {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
