@@ -46,6 +46,18 @@ a.list-item:hover,
 button.list-item:hover {
   background: var(--surface-hover);
 }
+/* onClick rows are <button>s: undo the global button look so they hover like link rows */
+button.list-item {
+  border-radius: 0;
+}
+button.list-item:hover:not(:disabled) {
+  border-color: var(--border);
+  /* like a link row (global a:hover), the text and icons take the accent colour on hover */
+  color: var(--accent-dark);
+}
+button.list-item:active:not(:disabled) {
+  transform: none;
+}
 .list-item.emphasized {
   background: var(--surface);
 }
