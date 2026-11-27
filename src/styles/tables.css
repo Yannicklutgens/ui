@@ -116,7 +116,8 @@ tbody tr:hover td {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: subgrid;
-  border-top: 1px solid var(--border-strong);
+}
+.table-foot-title {
   background: var(--bg-elevated);
 }
 .table-foot > .table-row:last-child {
@@ -125,7 +126,7 @@ tbody tr:hover td {
 .table-foot-title .table-cell {
   grid-column: 1 / -1;
 }
-:is(.table-head, .table-foot) .table-cell {
+:is(.table-head, .table-foot-title) .table-cell {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -167,7 +168,7 @@ button.table-row {
 }
 a.table-row:hover,
 button.table-row:hover,
-div.table-row:not(.table-head):not(.table-foot > .table-row):hover {
+div.table-row:not(.table-head):not(.table-foot-title):hover {
   background: var(--surface-hover);
 }
 .table-row.emphasized {
@@ -221,6 +222,7 @@ div.table-row:not(.table-head):not(.table-foot > .table-row):hover {
     --table-cell-padding-y: 14px;
   }
   .table:not(.table-compact) > .table-row:not(.table-head),
+  .table:not(.table-compact) > .table-foot > .table-row:not(.table-foot-title),
   .table:not(.table-compact) > .table-row-swipe {
     font-size: 15px;
   }
