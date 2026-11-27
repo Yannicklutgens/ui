@@ -111,22 +111,14 @@ tbody tr:hover td {
   background: var(--bg-elevated);
 }
 
-/* TableFoot: total rows under the body, on the same column tracks */
-.table-foot {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
-}
-.table-foot-title {
+/* TableSection: a full-width bar between rows, styled like the head */
+.table-section {
   background: var(--bg-elevated);
 }
-.table-foot > .table-row:last-child {
-  border-bottom: none;
-}
-.table-foot-title .table-cell {
+.table-section .table-cell {
   grid-column: 1 / -1;
 }
-:is(.table-head, .table-foot-title) .table-cell {
+:is(.table-head, .table-section) .table-cell {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -168,7 +160,7 @@ button.table-row {
 }
 a.table-row:hover,
 button.table-row:hover,
-div.table-row:not(.table-head):not(.table-foot-title):hover {
+div.table-row:not(.table-head):not(.table-section):hover {
   background: var(--surface-hover);
 }
 .table-row.emphasized {
@@ -221,8 +213,7 @@ div.table-row:not(.table-head):not(.table-foot-title):hover {
   .table:not(.table-compact) {
     --table-cell-padding-y: 14px;
   }
-  .table:not(.table-compact) > .table-row:not(.table-head),
-  .table:not(.table-compact) > .table-foot > .table-row:not(.table-foot-title),
+  .table:not(.table-compact) > .table-row:not(.table-head):not(.table-section),
   .table:not(.table-compact) > .table-row-swipe {
     font-size: 15px;
   }
@@ -283,8 +274,10 @@ div.table-row:not(.table-head):not(.table-foot-title):hover {
     grid-column: 3;
     grid-row: 1 / span 50;
   }
-  .table-overflow-stack .table-foot {
-    display: block;
+  /* a section stays a full-width bar, not a label line */
+  .table-overflow-stack .table-section .table-cell {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
   }
   .table-overflow-stack .table-cell:empty {
     display: none;

@@ -419,22 +419,16 @@ export function TableRow({
   );
 }
 
-export interface TableFootProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  /** A full-width first row, e.g. "Totaal". */
-  title?: ReactNode;
-}
+export interface TableSectionProps extends HTMLAttributes<HTMLDivElement> {}
 
-/** Total rows under the body: put TableRows with TableCells in it, they line up with the columns like the other rows. */
-export function TableFoot({ title, className, children, ...rest }: TableFootProps) {
-  useTable("TableFoot");
+/** A full-width header bar between rows, e.g. "Totaal" above total rows or a group name. Styled like the TableHead. */
+export function TableSection({ className, children, ...rest }: TableSectionProps) {
+  useTable("TableSection");
   return (
-    <div role="rowgroup" className={["table-foot", className].filter(Boolean).join(" ")} {...rest}>
-      {title && (
-        <div role="row" className="table-row table-foot-title">
-          <span role="cell" className="table-cell">{title}</span>
-        </div>
-      )}
-      {children}
+    <div role="row" className={["table-row table-section", className].filter(Boolean).join(" ")} {...rest}>
+      <span role="columnheader" className="table-cell">
+        {children}
+      </span>
     </div>
   );
 }
